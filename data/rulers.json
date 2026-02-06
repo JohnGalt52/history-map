@@ -1,0 +1,201 @@
+{
+  "metadata": {
+    "generated": "2026-02-05",
+    "description": "Historical rulers and government systems by region and era",
+    "sources": [
+      "Encyclopaedia Britannica",
+      "Oxford Dictionary of National Biography", 
+      "Cambridge Ancient/Medieval/Modern History series"
+    ]
+  },
+  "rulers": [
+    {
+      "region": "Egypt",
+      "aliases": ["Egyptian", "Ptolemaic", "Mamluk Egypt"],
+      "periods": [
+        {"start": -3100, "end": -2686, "ruler": "Narmer/Menes", "title": "Pharaoh", "dynasty": "Early Dynastic", "government": "Divine Monarchy", "notes": "Unified Upper and Lower Egypt"},
+        {"start": -2686, "end": -2181, "ruler": "Various", "title": "Pharaoh", "dynasty": "Old Kingdom", "government": "Divine Monarchy", "capital": "Memphis", "notes": "Age of pyramid building"},
+        {"start": -2055, "end": -1650, "ruler": "Mentuhotep II → Amenemhat III", "title": "Pharaoh", "dynasty": "Middle Kingdom", "government": "Divine Monarchy", "notes": "Classical age of Egyptian culture"},
+        {"start": -1550, "end": -1069, "ruler": "Ahmose I → Ramesses XI", "title": "Pharaoh", "dynasty": "New Kingdom", "government": "Divine Monarchy", "capital": "Thebes", "notes": "Imperial Egypt - Tutankhamun, Ramesses II"},
+        {"start": -332, "end": -30, "ruler": "Ptolemy I → Cleopatra VII", "title": "Pharaoh", "dynasty": "Ptolemaic", "government": "Hellenistic Monarchy", "capital": "Alexandria", "notes": "Greek-Egyptian fusion"},
+        {"start": -30, "end": 641, "ruler": "Roman Emperors", "title": "Emperor (via Prefect)", "dynasty": "Roman Province", "government": "Imperial Province", "notes": "Breadbasket of Rome"},
+        {"start": 641, "end": 1250, "ruler": "Various Caliphs", "title": "Caliph/Sultan", "dynasty": "Arab/Fatimid", "government": "Islamic Caliphate", "capital": "Fustat/Cairo"},
+        {"start": 1250, "end": 1517, "ruler": "Mamluk Sultans", "title": "Sultan", "dynasty": "Mamluk", "government": "Military Oligarchy", "capital": "Cairo", "notes": "Slave-soldier dynasty"},
+        {"start": 1517, "end": 1867, "ruler": "Ottoman Sultans", "title": "Sultan (via Pasha)", "dynasty": "Ottoman Province", "government": "Imperial Province", "capital": "Constantinople"}
+      ]
+    },
+    {
+      "region": "Roman Empire",
+      "aliases": ["Rome", "Roman", "Italia", "Western Roman", "Byzantine"],
+      "periods": [
+        {"start": -753, "end": -509, "ruler": "Romulus → Tarquinius Superbus", "title": "King", "dynasty": "Roman Kingdom", "government": "Monarchy", "capital": "Rome"},
+        {"start": -509, "end": -27, "ruler": "Senate & Consuls", "title": "Consul", "dynasty": "Roman Republic", "government": "Republic (Oligarchy)", "capital": "Rome", "notes": "Two consuls elected annually"},
+        {"start": -27, "end": 14, "ruler": "Augustus (Octavian)", "title": "Princeps/Imperator", "dynasty": "Julio-Claudian", "government": "Principate", "capital": "Rome", "notes": "First Roman Emperor"},
+        {"start": 14, "end": 68, "ruler": "Tiberius → Nero", "title": "Emperor", "dynasty": "Julio-Claudian", "government": "Principate", "capital": "Rome"},
+        {"start": 69, "end": 96, "ruler": "Vespasian → Domitian", "title": "Emperor", "dynasty": "Flavian", "government": "Principate", "capital": "Rome"},
+        {"start": 96, "end": 180, "ruler": "Nerva → Marcus Aurelius", "title": "Emperor", "dynasty": "Nerva-Antonine", "government": "Principate", "capital": "Rome", "notes": "Five Good Emperors - peak of empire"},
+        {"start": 284, "end": 305, "ruler": "Diocletian", "title": "Dominus", "dynasty": "Tetrarchy", "government": "Dominate", "capital": "Nicomedia", "notes": "Reformed empire, split into four"},
+        {"start": 306, "end": 337, "ruler": "Constantine I", "title": "Augustus", "dynasty": "Constantinian", "government": "Dominate", "capital": "Constantinople", "notes": "First Christian emperor, founded Constantinople"},
+        {"start": 379, "end": 395, "ruler": "Theodosius I", "title": "Augustus", "dynasty": "Theodosian", "government": "Dominate", "capital": "Constantinople", "notes": "Last emperor of unified empire"},
+        {"start": 395, "end": 476, "ruler": "Various (Western)", "title": "Emperor", "dynasty": "Western Roman", "government": "Dominate", "capital": "Ravenna", "notes": "Declining Western Empire"},
+        {"start": 395, "end": 1453, "ruler": "Byzantine Emperors", "title": "Basileus", "dynasty": "Byzantine", "government": "Autocracy", "capital": "Constantinople", "notes": "Eastern Roman/Byzantine Empire"}
+      ]
+    },
+    {
+      "region": "China",
+      "aliases": ["Chinese", "Han", "Tang", "Song", "Ming", "Qing", "Yuan"],
+      "periods": [
+        {"start": -2070, "end": -1600, "ruler": "Yu the Great → Jie", "title": "King", "dynasty": "Xia", "government": "Hereditary Monarchy", "notes": "Semi-legendary first dynasty"},
+        {"start": -1600, "end": -1046, "ruler": "Tang → Zhou", "title": "King", "dynasty": "Shang", "government": "Theocratic Monarchy", "capital": "Yin", "notes": "Oracle bones, bronze casting"},
+        {"start": -1046, "end": -256, "ruler": "King Wu → various", "title": "King/Hegemon", "dynasty": "Zhou", "government": "Feudal Monarchy", "capital": "Haojing/Luoyang", "notes": "Mandate of Heaven established"},
+        {"start": -221, "end": -206, "ruler": "Qin Shi Huang", "title": "Huangdi (Emperor)", "dynasty": "Qin", "government": "Legalist Autocracy", "capital": "Xianyang", "notes": "First Emperor, unified China, built Great Wall"},
+        {"start": -206, "end": 220, "ruler": "Liu Bang → Xian", "title": "Huangdi", "dynasty": "Han", "government": "Confucian Bureaucracy", "capital": "Chang'an/Luoyang", "notes": "Golden age, Silk Road opened"},
+        {"start": 618, "end": 907, "ruler": "Li Yuan → Ai", "title": "Huangdi", "dynasty": "Tang", "government": "Confucian Bureaucracy", "capital": "Chang'an", "notes": "Cultural golden age, cosmopolitan empire"},
+        {"start": 960, "end": 1279, "ruler": "Zhao Kuangyin → Bing", "title": "Huangdi", "dynasty": "Song", "government": "Civil Bureaucracy", "capital": "Kaifeng/Hangzhou", "notes": "Economic revolution, printing, gunpowder"},
+        {"start": 1271, "end": 1368, "ruler": "Kublai Khan → Toghon Temür", "title": "Khagan/Huangdi", "dynasty": "Yuan (Mongol)", "government": "Khanate", "capital": "Khanbaliq (Beijing)", "notes": "Mongol rule, Marco Polo visited"},
+        {"start": 1368, "end": 1644, "ruler": "Hongwu → Chongzhen", "title": "Huangdi", "dynasty": "Ming", "government": "Confucian Autocracy", "capital": "Nanjing/Beijing", "notes": "Great Wall rebuilt, Zheng He voyages"},
+        {"start": 1644, "end": 1912, "ruler": "Shunzhi → Puyi", "title": "Huangdi", "dynasty": "Qing (Manchu)", "government": "Confucian Autocracy", "capital": "Beijing", "notes": "Last imperial dynasty, peak territory"}
+      ]
+    },
+    {
+      "region": "Persia",
+      "aliases": ["Persian", "Achaemenid", "Sassanid", "Safavid", "Iran"],
+      "periods": [
+        {"start": -550, "end": -330, "ruler": "Cyrus II → Darius III", "title": "Shahanshah (King of Kings)", "dynasty": "Achaemenid", "government": "Universal Monarchy", "capital": "Persepolis", "notes": "First world empire, Cyrus Cylinder"},
+        {"start": -247, "end": 224, "ruler": "Arsaces I → Artabanus IV", "title": "Shah", "dynasty": "Parthian (Arsacid)", "government": "Feudal Monarchy", "capital": "Ctesiphon", "notes": "Rival to Rome"},
+        {"start": 224, "end": 651, "ruler": "Ardashir I → Yazdegerd III", "title": "Shahanshah", "dynasty": "Sassanid", "government": "Zoroastrian Monarchy", "capital": "Ctesiphon", "notes": "Last pre-Islamic Persian empire"},
+        {"start": 651, "end": 1501, "ruler": "Various Caliphs/Sultans", "title": "Caliph/Sultan", "dynasty": "Arab/Turkic rule", "government": "Islamic Caliphate", "notes": "Persianate culture flourished under Islam"},
+        {"start": 1501, "end": 1736, "ruler": "Ismail I → Abbas III", "title": "Shah", "dynasty": "Safavid", "government": "Shia Theocracy", "capital": "Isfahan", "notes": "Shia Islam state religion"},
+        {"start": 1794, "end": 1925, "ruler": "Agha Mohammad Khan → Ahmad Shah", "title": "Shah", "dynasty": "Qajar", "government": "Monarchy", "capital": "Tehran"}
+      ]
+    },
+    {
+      "region": "Mongol Empire",
+      "aliases": ["Mongol", "Yuan", "Golden Horde", "Ilkhanate"],
+      "periods": [
+        {"start": 1206, "end": 1227, "ruler": "Genghis Khan (Temüjin)", "title": "Khagan", "dynasty": "Mongol", "government": "Khanate", "capital": "Karakorum", "notes": "Unified Mongol tribes, conquered from China to Persia"},
+        {"start": 1227, "end": 1241, "ruler": "Ögedei Khan", "title": "Khagan", "dynasty": "Mongol", "government": "Khanate", "capital": "Karakorum", "notes": "Expanded into Europe and Middle East"},
+        {"start": 1251, "end": 1259, "ruler": "Möngke Khan", "title": "Khagan", "dynasty": "Mongol", "government": "Khanate", "capital": "Karakorum", "notes": "Last united empire"},
+        {"start": 1260, "end": 1294, "ruler": "Kublai Khan", "title": "Khagan", "dynasty": "Yuan", "government": "Khanate", "capital": "Khanbaliq", "notes": "Emperor of China, empire fragmenting"}
+      ]
+    },
+    {
+      "region": "Ottoman Empire",
+      "aliases": ["Ottoman", "Turkey", "Türkiye"],
+      "periods": [
+        {"start": 1299, "end": 1326, "ruler": "Osman I", "title": "Bey", "dynasty": "Ottoman", "government": "Beylik", "capital": "Söğüt", "notes": "Founder of dynasty"},
+        {"start": 1326, "end": 1451, "ruler": "Orhan → Murad II", "title": "Sultan", "dynasty": "Ottoman", "government": "Sultanate", "capital": "Bursa/Edirne", "notes": "Expansion into Balkans"},
+        {"start": 1451, "end": 1481, "ruler": "Mehmed II", "title": "Sultan", "dynasty": "Ottoman", "government": "Sultanate", "capital": "Constantinople", "notes": "Conquered Constantinople 1453"},
+        {"start": 1520, "end": 1566, "ruler": "Suleiman I (the Magnificent)", "title": "Sultan", "dynasty": "Ottoman", "government": "Sultanate", "capital": "Constantinople", "notes": "Peak of empire, lawgiver"},
+        {"start": 1566, "end": 1922, "ruler": "Selim II → Mehmed VI", "title": "Sultan", "dynasty": "Ottoman", "government": "Sultanate", "capital": "Constantinople", "notes": "Gradual decline"}
+      ]
+    },
+    {
+      "region": "England",
+      "aliases": ["English", "British", "Britain", "United Kingdom", "UK"],
+      "periods": [
+        {"start": 871, "end": 899, "ruler": "Alfred the Great", "title": "King", "dynasty": "Wessex", "government": "Monarchy", "capital": "Winchester", "notes": "Defended against Vikings"},
+        {"start": 1066, "end": 1087, "ruler": "William I (the Conqueror)", "title": "King", "dynasty": "Norman", "government": "Feudal Monarchy", "capital": "London", "notes": "Norman Conquest"},
+        {"start": 1154, "end": 1189, "ruler": "Henry II", "title": "King", "dynasty": "Plantagenet", "government": "Feudal Monarchy", "capital": "London", "notes": "Angevin Empire"},
+        {"start": 1189, "end": 1199, "ruler": "Richard I (Lionheart)", "title": "King", "dynasty": "Plantagenet", "government": "Feudal Monarchy", "capital": "London", "notes": "Third Crusade"},
+        {"start": 1199, "end": 1216, "ruler": "John", "title": "King", "dynasty": "Plantagenet", "government": "Feudal Monarchy", "capital": "London", "notes": "Magna Carta 1215"},
+        {"start": 1485, "end": 1509, "ruler": "Henry VII", "title": "King", "dynasty": "Tudor", "government": "Monarchy", "capital": "London", "notes": "End of Wars of the Roses"},
+        {"start": 1509, "end": 1547, "ruler": "Henry VIII", "title": "King", "dynasty": "Tudor", "government": "Monarchy", "capital": "London", "notes": "English Reformation"},
+        {"start": 1558, "end": 1603, "ruler": "Elizabeth I", "title": "Queen", "dynasty": "Tudor", "government": "Monarchy", "capital": "London", "notes": "Elizabethan Era, defeated Armada"},
+        {"start": 1649, "end": 1660, "ruler": "Oliver Cromwell", "title": "Lord Protector", "dynasty": "Commonwealth", "government": "Republic", "capital": "London", "notes": "Only republic in English history"},
+        {"start": 1837, "end": 1901, "ruler": "Victoria", "title": "Queen-Empress", "dynasty": "Hanover", "government": "Constitutional Monarchy", "capital": "London", "notes": "British Empire at peak"}
+      ]
+    },
+    {
+      "region": "France",
+      "aliases": ["French", "Frankish", "Gaul"],
+      "periods": [
+        {"start": 481, "end": 511, "ruler": "Clovis I", "title": "King", "dynasty": "Merovingian", "government": "Monarchy", "capital": "Paris", "notes": "United Franks, converted to Christianity"},
+        {"start": 768, "end": 814, "ruler": "Charlemagne", "title": "Emperor", "dynasty": "Carolingian", "government": "Empire", "capital": "Aachen", "notes": "Carolingian Empire, crowned by Pope"},
+        {"start": 987, "end": 1328, "ruler": "Hugh Capet → Charles IV", "title": "King", "dynasty": "Capetian", "government": "Feudal Monarchy", "capital": "Paris"},
+        {"start": 1643, "end": 1715, "ruler": "Louis XIV", "title": "King", "dynasty": "Bourbon", "government": "Absolute Monarchy", "capital": "Versailles", "notes": "Sun King, 72-year reign"},
+        {"start": 1792, "end": 1804, "ruler": "National Convention/Directory", "title": "Various", "dynasty": "First Republic", "government": "Republic", "capital": "Paris", "notes": "French Revolution"},
+        {"start": 1804, "end": 1814, "ruler": "Napoleon I (Bonaparte)", "title": "Emperor", "dynasty": "First Empire", "government": "Empire", "capital": "Paris", "notes": "Napoleonic Wars, conquered Europe"},
+        {"start": 1852, "end": 1870, "ruler": "Napoleon III", "title": "Emperor", "dynasty": "Second Empire", "government": "Empire", "capital": "Paris"}
+      ]
+    },
+    {
+      "region": "India",
+      "aliases": ["Indian", "Mughal", "Delhi", "Maurya", "Gupta"],
+      "periods": [
+        {"start": -322, "end": -185, "ruler": "Chandragupta → Brihadratha", "title": "Samrat", "dynasty": "Maurya", "government": "Empire", "capital": "Pataliputra", "notes": "First Indian empire, Ashoka"},
+        {"start": -268, "end": -232, "ruler": "Ashoka", "title": "Samrat", "dynasty": "Maurya", "government": "Empire", "capital": "Pataliputra", "notes": "Spread Buddhism, Ashoka's edicts"},
+        {"start": 320, "end": 550, "ruler": "Chandragupta I → Vishnugupta", "title": "Maharajadhiraja", "dynasty": "Gupta", "government": "Empire", "capital": "Pataliputra", "notes": "Golden Age of India"},
+        {"start": 1206, "end": 1526, "ruler": "Various Sultans", "title": "Sultan", "dynasty": "Delhi Sultanate", "government": "Sultanate", "capital": "Delhi", "notes": "First major Islamic state in India"},
+        {"start": 1526, "end": 1530, "ruler": "Babur", "title": "Padshah", "dynasty": "Mughal", "government": "Empire", "capital": "Agra", "notes": "Founded Mughal Empire"},
+        {"start": 1556, "end": 1605, "ruler": "Akbar", "title": "Padshah", "dynasty": "Mughal", "government": "Empire", "capital": "Fatehpur Sikri", "notes": "Greatest Mughal, religious tolerance"},
+        {"start": 1628, "end": 1658, "ruler": "Shah Jahan", "title": "Padshah", "dynasty": "Mughal", "government": "Empire", "capital": "Shahjahanabad", "notes": "Built Taj Mahal"},
+        {"start": 1658, "end": 1707, "ruler": "Aurangzeb", "title": "Padshah", "dynasty": "Mughal", "government": "Empire", "capital": "Delhi", "notes": "Largest Mughal territory, but began decline"},
+        {"start": 1858, "end": 1947, "ruler": "British Crown", "title": "Emperor/Empress", "dynasty": "British Raj", "government": "Colonial", "capital": "Calcutta/Delhi", "notes": "British India"}
+      ]
+    },
+    {
+      "region": "Japan",
+      "aliases": ["Japanese"],
+      "periods": [
+        {"start": -660, "end": 710, "ruler": "Jimmu → Genmei", "title": "Tennō (Emperor)", "dynasty": "Yamato", "government": "Divine Monarchy", "capital": "Various", "notes": "Traditional founding, legendary early emperors"},
+        {"start": 794, "end": 1185, "ruler": "Kammu → Go-Toba", "title": "Tennō", "dynasty": "Heian", "government": "Aristocratic Rule (Fujiwara)", "capital": "Heian-kyō (Kyoto)", "notes": "Classical culture, Tale of Genji"},
+        {"start": 1185, "end": 1333, "ruler": "Minamoto/Hōjō", "title": "Shōgun", "dynasty": "Kamakura Shogunate", "government": "Military Dictatorship", "capital": "Kamakura", "notes": "First shogunate, defeated Mongols"},
+        {"start": 1336, "end": 1573, "ruler": "Ashikaga", "title": "Shōgun", "dynasty": "Muromachi Shogunate", "government": "Military Dictatorship", "capital": "Kyoto", "notes": "Warring States period"},
+        {"start": 1603, "end": 1868, "ruler": "Tokugawa", "title": "Shōgun", "dynasty": "Tokugawa Shogunate", "government": "Military Dictatorship", "capital": "Edo (Tokyo)", "notes": "Sakoku isolation policy"},
+        {"start": 1868, "end": 1912, "ruler": "Meiji (Mutsuhito)", "title": "Tennō", "dynasty": "Meiji", "government": "Constitutional Monarchy", "capital": "Tokyo", "notes": "Meiji Restoration, rapid modernization"}
+      ]
+    },
+    {
+      "region": "Spain",
+      "aliases": ["Spanish", "Castile", "Aragon", "Hispania"],
+      "periods": [
+        {"start": -197, "end": 409, "ruler": "Roman Emperors", "title": "Emperor (via Governor)", "dynasty": "Roman Province", "government": "Imperial Province", "capital": "Tarraco", "notes": "Hispania province"},
+        {"start": 711, "end": 1492, "ruler": "Various Emirs/Caliphs", "title": "Emir/Caliph", "dynasty": "Umayyad/Taifa", "government": "Islamic Emirate", "capital": "Córdoba", "notes": "Al-Andalus, Reconquista ongoing"},
+        {"start": 1469, "end": 1504, "ruler": "Ferdinand II & Isabella I", "title": "King & Queen", "dynasty": "Trastámara", "government": "Personal Union", "capital": "Toledo", "notes": "United Spain, sponsored Columbus"},
+        {"start": 1516, "end": 1556, "ruler": "Charles V (Carlos I)", "title": "King/Emperor", "dynasty": "Habsburg", "government": "Empire", "capital": "Valladolid", "notes": "Also Holy Roman Emperor"},
+        {"start": 1556, "end": 1598, "ruler": "Philip II", "title": "King", "dynasty": "Habsburg", "government": "Monarchy", "capital": "Madrid", "notes": "Spanish Empire at peak, Armada 1588"},
+        {"start": 1700, "end": 1746, "ruler": "Philip V", "title": "King", "dynasty": "Bourbon", "government": "Monarchy", "capital": "Madrid", "notes": "First Bourbon king after War of Succession"}
+      ]
+    },
+    {
+      "region": "Russia",
+      "aliases": ["Russian", "Rus", "Muscovy", "Soviet"],
+      "periods": [
+        {"start": 862, "end": 1054, "ruler": "Rurik → Yaroslav I", "title": "Grand Prince", "dynasty": "Rurikid", "government": "Principality", "capital": "Novgorod/Kiev", "notes": "Kievan Rus founded"},
+        {"start": 1283, "end": 1547, "ruler": "Daniel → Ivan IV", "title": "Grand Prince", "dynasty": "Rurikid (Moscow)", "government": "Principality", "capital": "Moscow", "notes": "Rise of Muscovy"},
+        {"start": 1547, "end": 1584, "ruler": "Ivan IV (the Terrible)", "title": "Tsar", "dynasty": "Rurikid", "government": "Tsardom", "capital": "Moscow", "notes": "First Tsar, conquered Kazan"},
+        {"start": 1613, "end": 1917, "ruler": "Michael I → Nicholas II", "title": "Tsar/Emperor", "dynasty": "Romanov", "government": "Tsardom/Empire", "capital": "Moscow/St Petersburg", "notes": "Romanov dynasty"},
+        {"start": 1682, "end": 1725, "ruler": "Peter I (the Great)", "title": "Tsar/Emperor", "dynasty": "Romanov", "government": "Empire", "capital": "St Petersburg", "notes": "Westernized Russia, built St Petersburg"},
+        {"start": 1762, "end": 1796, "ruler": "Catherine II (the Great)", "title": "Empress", "dynasty": "Romanov", "government": "Empire", "capital": "St Petersburg", "notes": "Expanded south, enlightened despot"},
+        {"start": 1917, "end": 1924, "ruler": "Vladimir Lenin", "title": "Chairman", "dynasty": "Bolshevik", "government": "Communist State", "capital": "Moscow", "notes": "Russian Revolution, founded USSR"},
+        {"start": 1924, "end": 1953, "ruler": "Joseph Stalin", "title": "General Secretary", "dynasty": "Soviet", "government": "Communist Dictatorship", "capital": "Moscow", "notes": "Industrialization, WWII, purges"}
+      ]
+    },
+    {
+      "region": "Greece",
+      "aliases": ["Greek", "Hellenic", "Athens", "Sparta", "Macedonia"],
+      "periods": [
+        {"start": -800, "end": -500, "ruler": "Various Kings/Tyrants", "title": "Basileus/Tyrannos", "dynasty": "Archaic", "government": "City-States", "capital": "Various", "notes": "Rise of polis system"},
+        {"start": -508, "end": -322, "ruler": "Assembly (demos)", "title": "Strategos", "dynasty": "Classical Athens", "government": "Direct Democracy", "capital": "Athens", "notes": "Athenian democracy, Pericles"},
+        {"start": -359, "end": -336, "ruler": "Philip II", "title": "King", "dynasty": "Argead", "government": "Monarchy", "capital": "Pella", "notes": "United Greece under Macedon"},
+        {"start": -336, "end": -323, "ruler": "Alexander III (the Great)", "title": "King/Pharaoh/Shah", "dynasty": "Argead", "government": "Empire", "capital": "Babylon", "notes": "Conquered Persian Empire to India"},
+        {"start": -323, "end": -146, "ruler": "Various Diadochi", "title": "King", "dynasty": "Hellenistic", "government": "Successor Kingdoms", "capital": "Various", "notes": "Ptolemies, Seleucids, Antigonids"},
+        {"start": -146, "end": 395, "ruler": "Roman Emperors", "title": "Emperor", "dynasty": "Roman Province", "government": "Imperial Province", "capital": "Rome", "notes": "Achaea province"}
+      ]
+    },
+    {
+      "region": "Holy Roman Empire",
+      "aliases": ["HRE", "German", "Germany", "Habsburg"],
+      "periods": [
+        {"start": 800, "end": 814, "ruler": "Charlemagne", "title": "Emperor", "dynasty": "Carolingian", "government": "Empire", "capital": "Aachen", "notes": "Crowned by Pope Leo III"},
+        {"start": 962, "end": 1024, "ruler": "Otto I → Henry II", "title": "Emperor", "dynasty": "Ottonian", "government": "Elective Monarchy", "capital": "Various", "notes": "Revival of Empire"},
+        {"start": 1138, "end": 1254, "ruler": "Conrad III → Conrad IV", "title": "Emperor", "dynasty": "Hohenstaufen", "government": "Elective Monarchy", "capital": "Various", "notes": "Conflict with Papacy"},
+        {"start": 1273, "end": 1291, "ruler": "Rudolf I", "title": "King of the Romans", "dynasty": "Habsburg", "government": "Elective Monarchy", "capital": "Vienna", "notes": "First Habsburg ruler"},
+        {"start": 1519, "end": 1556, "ruler": "Charles V", "title": "Emperor", "dynasty": "Habsburg", "government": "Elective Monarchy", "capital": "Vienna/Brussels", "notes": "Also King of Spain, fought Reformation"},
+        {"start": 1740, "end": 1780, "ruler": "Maria Theresa", "title": "Empress (de facto)", "dynasty": "Habsburg-Lorraine", "government": "Elective Monarchy", "capital": "Vienna", "notes": "Enlightened reforms"},
+        {"start": 1806, "end": 1806, "ruler": "Francis II", "title": "Emperor", "dynasty": "Habsburg-Lorraine", "government": "Dissolved", "capital": "Vienna", "notes": "Empire dissolved by Napoleon"}
+      ]
+    }
+  ]
+}

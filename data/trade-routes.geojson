@@ -1,0 +1,538 @@
+{
+  "type": "FeatureCollection",
+  "generated": "2026-02-05",
+  "description": "Major historical trade routes",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Silk Road - Main Route",
+        "type": "land",
+        "active_period": {"start": -200, "end": 1450},
+        "peak_period": {"start": 100, "end": 250},
+        "goods": ["silk", "spices", "jade", "gold", "ivory", "horses", "paper", "gunpowder"],
+        "key_cities": ["Chang'an (Xi'an)", "Dunhuang", "Kashgar", "Samarkand", "Bukhara", "Merv", "Baghdad", "Constantinople"],
+        "description": "Primary overland route connecting China to the Mediterranean, facilitating exchange of goods, ideas, and religions",
+        "sources": ["Liu, Xinru. The Silk Road in World History (2010)", "Hansen, Valerie. The Silk Road: A New History (2012)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [108.94, 34.26], [103.82, 36.06], [98.29, 39.77], [94.66, 40.14],
+          [92.13, 42.95], [87.60, 43.79], [75.99, 39.47], [71.67, 40.08],
+          [66.96, 39.65], [64.42, 39.77], [62.19, 37.59], [58.36, 37.28],
+          [52.53, 35.70], [47.98, 35.56], [44.37, 33.31], [41.01, 37.07],
+          [35.51, 38.74], [32.86, 39.93], [28.98, 41.01]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Silk Road - Northern Steppe Route",
+        "type": "land",
+        "active_period": {"start": -100, "end": 1300},
+        "peak_period": {"start": 550, "end": 750},
+        "goods": ["horses", "furs", "slaves", "amber", "silk"],
+        "key_cities": ["Chang'an", "Turpan", "Almaty", "Tashkent", "Astrakhan", "Kiev"],
+        "description": "Northern branch through Central Asian steppes, favored by nomadic traders",
+        "sources": ["Beckwith, Christopher. Empires of the Silk Road (2009)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [108.94, 34.26], [103.82, 36.06], [95.94, 41.73], [89.19, 42.95],
+          [80.23, 44.21], [76.95, 43.24], [69.25, 41.31], [63.57, 45.02],
+          [51.18, 46.35], [47.93, 46.73], [44.52, 48.71], [37.62, 55.75],
+          [30.52, 50.45]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Silk Road - Southern Route (Karakoram)",
+        "type": "land",
+        "active_period": {"start": -100, "end": 1000},
+        "peak_period": {"start": 50, "end": 400},
+        "goods": ["silk", "lapis lazuli", "rubies", "cotton", "spices"],
+        "key_cities": ["Chang'an", "Dunhuang", "Khotan", "Yarkand", "Gilgit", "Taxila", "Peshawar"],
+        "description": "Southern branch through Tarim Basin and over Karakoram passes to India",
+        "sources": ["Wood, Frances. The Silk Road: Two Thousand Years in the Heart of Asia (2002)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [108.94, 34.26], [94.66, 40.14], [88.18, 38.13], [79.93, 37.12],
+          [77.41, 38.86], [75.78, 37.04], [74.31, 35.92], [72.87, 33.72],
+          [71.58, 34.01]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spice Route - Maritime",
+        "type": "maritime",
+        "active_period": {"start": -300, "end": 1600},
+        "peak_period": {"start": 1200, "end": 1500},
+        "goods": ["pepper", "cinnamon", "cloves", "nutmeg", "cardamom", "ginger", "turmeric"],
+        "key_cities": ["Malacca", "Calicut", "Aden", "Jeddah", "Alexandria", "Venice"],
+        "description": "Maritime route bringing spices from Southeast Asia and India to Mediterranean markets",
+        "sources": ["Turner, Jack. Spice: The History of a Temptation (2004)", "Keay, John. The Spice Route (2006)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.42, 1.29], [102.25, 2.20], [100.37, 5.42], [98.67, 8.48],
+          [80.23, 6.03], [75.78, 11.25], [72.88, 18.94], [57.53, 16.93],
+          [44.21, 12.78], [43.14, 14.54], [39.17, 21.49], [34.45, 27.18],
+          [32.30, 31.20], [29.92, 31.21], [12.34, 45.44]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Maritime Silk Road",
+        "type": "maritime",
+        "active_period": {"start": -200, "end": 1500},
+        "peak_period": {"start": 700, "end": 1100},
+        "goods": ["silk", "porcelain", "tea", "spices", "ivory", "gold"],
+        "key_cities": ["Guangzhou", "Quanzhou", "Hanoi", "Palembang", "Malacca", "Calicut", "Hormuz", "Basra"],
+        "description": "Sea route connecting Chinese ports to India, Arabia, and East Africa",
+        "sources": ["Sen, Tansen. Buddhism, Diplomacy, and Trade: The Realignment of Sino-Indian Relations (2003)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.26, 23.13], [118.59, 24.87], [108.21, 16.06], [106.63, 10.82],
+          [103.85, 1.29], [100.37, 5.42], [80.23, 6.03], [75.78, 11.25],
+          [56.27, 27.19], [47.98, 30.51], [39.61, 24.47], [43.14, 11.59],
+          [49.18, -12.16]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trans-Saharan Route - Western (Gold Road)",
+        "type": "land",
+        "active_period": {"start": 300, "end": 1600},
+        "peak_period": {"start": 1000, "end": 1400},
+        "goods": ["gold", "salt", "slaves", "ivory", "kola nuts", "textiles"],
+        "key_cities": ["Sijilmasa", "Taghaza", "Timbuktu", "Gao", "Djenne"],
+        "description": "Western trans-Saharan route carrying gold from Mali Empire to Mediterranean",
+        "sources": ["Levtzion, Nehemia. Ancient Ghana and Mali (1973)", "Bovill, E.W. The Golden Trade of the Moors (1968)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-4.43, 31.28], [-5.53, 27.67], [-5.97, 23.67], [-5.02, 20.23],
+          [-3.01, 16.77], [-1.52, 15.93], [0.04, 16.27], [3.00, 14.04]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trans-Saharan Route - Central",
+        "type": "land",
+        "active_period": {"start": 200, "end": 1800},
+        "peak_period": {"start": 800, "end": 1200},
+        "goods": ["salt", "slaves", "gold", "copper", "textiles", "dates"],
+        "key_cities": ["Tripoli", "Ghadames", "Ghat", "Agadez", "Kano", "Zinder"],
+        "description": "Central route connecting Tripoli to Hausa states and Lake Chad region",
+        "sources": ["Lydon, Ghislaine. On Trans-Saharan Trails (2009)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [13.19, 32.90], [10.13, 29.13], [9.95, 30.13], [10.17, 24.96],
+          [7.99, 16.97], [8.52, 13.51], [9.06, 12.00]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trans-Saharan Route - Eastern (Forty Days Road)",
+        "type": "land",
+        "active_period": {"start": -500, "end": 1900},
+        "peak_period": {"start": 1400, "end": 1800},
+        "goods": ["slaves", "ivory", "ostrich feathers", "gum arabic", "spices"],
+        "key_cities": ["Assiut", "Kharga", "Selima", "Darfur", "El Fasher"],
+        "description": "Darb al-Arba'in - 40 days road from Darfur to Egypt, major slave trade route",
+        "sources": ["O'Fahey, R.S. The Darfur Sultanate (2008)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [31.18, 27.18], [30.55, 25.45], [29.24, 22.34], [28.53, 20.89],
+          [26.14, 18.78], [25.35, 13.63]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amber Road",
+        "type": "land",
+        "active_period": {"start": -3000, "end": 500},
+        "peak_period": {"start": -500, "end": 200},
+        "goods": ["amber", "furs", "honey", "wax", "slaves"],
+        "key_cities": ["Gdansk", "Wroclaw", "Brno", "Vienna", "Aquileia", "Venice"],
+        "description": "Ancient route carrying Baltic amber to Mediterranean civilizations",
+        "sources": ["Cunliffe, Barry. Europe Between the Oceans (2008)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.65, 54.35], [18.01, 53.13], [17.04, 51.11], [16.61, 49.20],
+          [16.37, 48.21], [14.51, 46.05], [13.56, 45.73], [12.34, 45.44]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Incense Route",
+        "type": "land",
+        "active_period": {"start": -1000, "end": 200},
+        "peak_period": {"start": -300, "end": 100},
+        "goods": ["frankincense", "myrrh", "spices", "precious stones", "textiles"],
+        "key_cities": ["Shabwa", "Marib", "Najran", "Mecca", "Petra", "Gaza"],
+        "description": "Route carrying Arabian frankincense and myrrh to Mediterranean markets",
+        "sources": ["Groom, Nigel. Frankincense and Myrrh (1981)", "Avanzini, Alessandra. Along the Aroma and Spice Routes (2010)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [47.02, 15.36], [45.32, 15.45], [44.23, 17.55], [39.73, 21.43],
+          [35.44, 30.33], [34.44, 31.50]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tea Horse Road (Southern Route)",
+        "type": "land",
+        "active_period": {"start": 600, "end": 1950},
+        "peak_period": {"start": 900, "end": 1400},
+        "goods": ["tea", "horses", "salt", "sugar", "hides", "musk"],
+        "key_cities": ["Pu'er", "Dali", "Lijiang", "Shangri-La", "Lhasa", "Shigatse"],
+        "description": "Ancient tea and horse trading route between Yunnan and Tibet",
+        "sources": ["Freeman, Michael. Ancient Tea Horse Road (2011)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [100.98, 22.82], [100.23, 25.61], [100.17, 26.87], [99.71, 27.83],
+          [96.14, 29.65], [91.11, 29.65], [88.88, 29.27]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Via Regia",
+        "type": "land",
+        "active_period": {"start": 800, "end": 1800},
+        "peak_period": {"start": 1200, "end": 1500},
+        "goods": ["textiles", "metals", "salt", "wine", "grain"],
+        "key_cities": ["Santiago de Compostela", "Paris", "Frankfurt", "Erfurt", "Leipzig", "Wroclaw", "Krakow", "Kiev"],
+        "description": "Royal road crossing Europe from Spain to Russia, major medieval trade artery",
+        "sources": ["Ohler, Norbert. The Medieval Traveller (1989)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-8.54, 42.88], [-1.68, 43.31], [2.35, 48.86], [8.68, 50.11],
+          [11.03, 50.98], [12.37, 51.34], [17.04, 51.11], [19.94, 50.06],
+          [30.52, 50.45]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Grand Trunk Road",
+        "type": "land",
+        "active_period": {"start": -300, "end": 1900},
+        "peak_period": {"start": 1540, "end": 1800},
+        "goods": ["textiles", "spices", "horses", "salt", "indigo", "opium"],
+        "key_cities": ["Kabul", "Peshawar", "Lahore", "Delhi", "Agra", "Varanasi", "Patna", "Kolkata"],
+        "description": "One of Asia's oldest and longest roads, connecting Bengal to Kabul",
+        "sources": ["Kipling, Rudyard. Kim (1901)", "Eraly, Abraham. The Mughal Throne (2003)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [69.17, 34.53], [71.58, 34.01], [74.34, 31.55], [77.21, 28.64],
+          [78.02, 27.18], [83.00, 25.32], [85.14, 25.61], [88.36, 22.57]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Persian Royal Road",
+        "type": "land",
+        "active_period": {"start": -500, "end": -330},
+        "peak_period": {"start": -500, "end": -400},
+        "goods": ["gold", "silver", "textiles", "royal dispatches"],
+        "key_cities": ["Susa", "Ecbatana", "Arbela", "Nineveh", "Haran", "Sardis", "Ephesus"],
+        "description": "Ancient highway built by Darius I for rapid communication across Persian Empire",
+        "sources": ["Herodotus. Histories (440 BCE)", "Briant, Pierre. From Cyrus to Alexander (2002)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [48.26, 32.19], [48.52, 34.80], [44.01, 36.19], [43.15, 36.34],
+          [39.05, 36.86], [28.04, 38.48], [27.35, 37.94]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hanseatic Trade Network - Main Route",
+        "type": "maritime",
+        "active_period": {"start": 1200, "end": 1600},
+        "peak_period": {"start": 1350, "end": 1450},
+        "goods": ["fish", "timber", "furs", "grain", "cloth", "salt", "beer"],
+        "key_cities": ["Novgorod", "Tallinn", "Riga", "Gdansk", "Lubeck", "Hamburg", "Bruges", "London"],
+        "description": "Northern European trading league dominating Baltic and North Sea commerce",
+        "sources": ["Dollinger, Philippe. The German Hansa (1970)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [31.28, 58.52], [24.75, 59.44], [24.11, 56.95], [18.65, 54.35],
+          [10.69, 53.87], [9.99, 53.55], [3.22, 51.21], [-0.13, 51.51]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Venetian Trade Network",
+        "type": "maritime",
+        "active_period": {"start": 900, "end": 1600},
+        "peak_period": {"start": 1200, "end": 1450},
+        "goods": ["spices", "silk", "glassware", "salt", "slaves", "grain"],
+        "key_cities": ["Venice", "Ragusa", "Crete", "Cyprus", "Constantinople", "Alexandria", "Acre"],
+        "description": "Maritime republic controlling Eastern Mediterranean trade",
+        "sources": ["Lane, Frederic. Venice: A Maritime Republic (1973)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [12.34, 45.44], [18.11, 42.65], [25.13, 35.24], [33.38, 35.17],
+          [28.98, 41.01], [29.92, 31.21], [35.07, 32.93]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Portuguese Carreira da India",
+        "type": "maritime",
+        "active_period": {"start": 1498, "end": 1800},
+        "peak_period": {"start": 1500, "end": 1600},
+        "goods": ["spices", "pepper", "silk", "porcelain", "gold", "slaves"],
+        "key_cities": ["Lisbon", "Sao Jorge da Mina", "Mozambique", "Goa", "Malacca", "Macau"],
+        "description": "Portuguese sea route to India around Africa, breaking Venetian spice monopoly",
+        "sources": ["Subrahmanyam, Sanjay. The Portuguese Empire in Asia (1993)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-9.14, 38.72], [-17.44, 14.69], [-1.02, 5.12], [12.37, -5.85],
+          [40.47, -15.03], [73.86, 15.50], [102.25, 2.20], [113.55, 22.20]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spanish Treasure Fleet (Flota de Indias)",
+        "type": "maritime",
+        "active_period": {"start": 1566, "end": 1790},
+        "peak_period": {"start": 1580, "end": 1650},
+        "goods": ["silver", "gold", "emeralds", "cochineal", "indigo", "tobacco", "cacao"],
+        "key_cities": ["Seville", "Havana", "Veracruz", "Portobelo", "Cartagena", "Lima"],
+        "description": "Convoy system transporting New World treasure to Spain",
+        "sources": ["Chaunu, Pierre. Seville et l'Atlantique (1955-1960)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-5.99, 37.39], [-25.67, 28.12], [-64.78, 32.30], [-82.36, 23.14],
+          [-96.15, 19.20], [-79.53, 9.40], [-75.51, 10.39], [-77.04, -12.05]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phoenician Trade Routes",
+        "type": "maritime",
+        "active_period": {"start": -1500, "end": -300},
+        "peak_period": {"start": -900, "end": -600},
+        "goods": ["purple dye", "cedar", "glass", "metals", "ivory", "slaves"],
+        "key_cities": ["Tyre", "Sidon", "Byblos", "Carthage", "Gades", "Utica"],
+        "description": "Phoenician maritime network spanning entire Mediterranean",
+        "sources": ["Aubet, Maria Eugenia. The Phoenicians and the West (2001)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [35.20, 33.27], [35.51, 33.56], [35.64, 34.12], [32.30, 31.20],
+          [10.17, 36.81], [-6.30, 36.53], [3.06, 36.75], [14.51, 35.90]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zheng He Treasure Voyages",
+        "type": "maritime",
+        "active_period": {"start": 1405, "end": 1433},
+        "peak_period": {"start": 1405, "end": 1433},
+        "goods": ["porcelain", "silk", "tea", "gold", "exotic animals", "spices"],
+        "key_cities": ["Nanjing", "Quanzhou", "Malacca", "Calicut", "Hormuz", "Aden", "Mogadishu", "Malindi"],
+        "description": "Chinese treasure fleet expeditions reaching East Africa under Admiral Zheng He",
+        "sources": ["Levathes, Louise. When China Ruled the Seas (1994)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [118.78, 32.06], [118.59, 24.87], [102.25, 2.20], [75.78, 11.25],
+          [56.27, 27.19], [44.21, 12.78], [45.34, 2.04], [40.12, -3.22]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Roman Grain Route (Alexandrian)",
+        "type": "maritime",
+        "active_period": {"start": -30, "end": 400},
+        "peak_period": {"start": 50, "end": 200},
+        "goods": ["grain", "papyrus", "linen", "glass", "wild animals"],
+        "key_cities": ["Alexandria", "Puteoli", "Ostia", "Rome"],
+        "description": "Critical grain supply route from Egypt to Rome, feeding the capital",
+        "sources": ["Casson, Lionel. Ships and Seamanship in the Ancient World (1971)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [29.92, 31.21], [25.13, 35.24], [15.08, 37.51], [14.03, 40.82],
+          [12.25, 41.77], [12.50, 41.90]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tin Route (Cornwall to Mediterranean)",
+        "type": "maritime",
+        "active_period": {"start": -1500, "end": -200},
+        "peak_period": {"start": -600, "end": -200},
+        "goods": ["tin", "lead", "copper", "gold", "slaves"],
+        "key_cities": ["Cornwall", "Ictis", "Corbilo", "Massalia", "Carthage"],
+        "description": "Route bringing British tin to Bronze Age Mediterranean civilizations",
+        "sources": ["Cunliffe, Barry. Facing the Ocean (2001)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-5.05, 50.27], [-4.14, 50.37], [-2.36, 47.27], [-1.55, 43.48],
+          [5.37, 43.30], [10.17, 36.81]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Arab Dhow Routes (Indian Ocean)",
+        "type": "maritime",
+        "active_period": {"start": 700, "end": 1900},
+        "peak_period": {"start": 900, "end": 1500},
+        "goods": ["dates", "pearls", "slaves", "ivory", "spices", "textiles"],
+        "key_cities": ["Basra", "Muscat", "Aden", "Mogadishu", "Kilwa", "Zanzibar", "Hormuz"],
+        "description": "Arab sailing dhows using monsoon winds to trade across Indian Ocean",
+        "sources": ["Hourani, George. Arab Seafaring (1951)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [47.98, 30.51], [58.54, 23.61], [44.21, 12.78], [45.34, 2.04],
+          [39.51, -8.81], [39.19, -6.17], [56.27, 27.19]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Via Salaria (Roman Salt Road)",
+        "type": "land",
+        "active_period": {"start": -800, "end": 500},
+        "peak_period": {"start": -200, "end": 200},
+        "goods": ["salt", "grain", "wine", "oil"],
+        "key_cities": ["Ostia", "Rome", "Reate", "Asculum", "Castrum Truentinum"],
+        "description": "Ancient Roman road for transporting salt from Adriatic to Rome",
+        "sources": ["Laurence, Ray. The Roads of Roman Italy (1999)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [12.29, 41.76], [12.50, 41.90], [12.86, 42.40], [13.56, 42.73],
+          [13.83, 42.85]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Viking Trade Routes",
+        "type": "maritime",
+        "active_period": {"start": 750, "end": 1100},
+        "peak_period": {"start": 850, "end": 1000},
+        "goods": ["furs", "amber", "slaves", "walrus ivory", "honey", "swords", "silver"],
+        "key_cities": ["Birka", "Hedeby", "Novgorod", "Kiev", "Constantinople", "Baghdad"],
+        "description": "Norse trading network from Scandinavia to Byzantium and Islamic world",
+        "sources": ["Brink, Stefan. The Viking World (2008)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [17.55, 59.33], [9.57, 54.49], [31.28, 58.52], [30.52, 50.45],
+          [28.98, 41.01], [44.37, 33.31]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Volga Trade Route",
+        "type": "land",
+        "active_period": {"start": 700, "end": 1100},
+        "peak_period": {"start": 850, "end": 1000},
+        "goods": ["furs", "honey", "wax", "slaves", "silver", "swords"],
+        "key_cities": ["Novgorod", "Bulgar", "Itil", "Samanid Bukhara"],
+        "description": "Trade route connecting Vikings to Islamic silver via Volga Bulgaria",
+        "sources": ["Franklin, Simon. The Emergence of Rus (1996)"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [31.28, 58.52], [43.15, 56.32], [49.11, 55.02], [47.93, 46.73],
+          [64.42, 39.77]
+        ]
+      }
+    }
+  ]
+}

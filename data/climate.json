@@ -1,0 +1,294 @@
+{
+  "metadata": {
+    "generated": "2026-02-05",
+    "description": "Major climate events and their historical impacts",
+    "sources": [
+      "Fagan, Brian. The Long Summer: How Climate Changed Civilization (2004)",
+      "Lamb, Hubert. Climate, History and the Modern World (1995)",
+      "Parker, Geoffrey. Global Crisis: War, Climate Change and Catastrophe (2013)",
+      "NOAA Paleoclimatology Database"
+    ]
+  },
+  "periods": [
+    {
+      "id": "ice-age-peak",
+      "name": "Last Glacial Maximum",
+      "type": "ice-age",
+      "start": -26000,
+      "end": -19000,
+      "severity": "extreme",
+      "description": "Peak of the last ice age. Ice sheets covered much of North America and Europe. Sea levels 120m lower than today.",
+      "impacts": [
+        "Land bridges connected continents (Beringia, Doggerland)",
+        "Human populations confined to refugia",
+        "Megafauna extinctions began"
+      ],
+      "affected_regions": [
+        {"lat": 55, "lng": -100, "intensity": 1.0},
+        {"lat": 60, "lng": 10, "intensity": 1.0},
+        {"lat": 65, "lng": 90, "intensity": 1.0}
+      ]
+    },
+    {
+      "id": "younger-dryas",
+      "name": "Younger Dryas",
+      "type": "cold-snap",
+      "start": -10900,
+      "end": -9700,
+      "severity": "severe",
+      "description": "Sudden return to ice-age conditions. Temperatures dropped 7°C in decades. May have triggered agriculture.",
+      "impacts": [
+        "Ended Natufian foraging prosperity",
+        "Possibly triggered agricultural revolution",
+        "Megafauna extinction accelerated"
+      ],
+      "affected_regions": [
+        {"lat": 50, "lng": 10, "intensity": 0.9},
+        {"lat": 35, "lng": 40, "intensity": 0.6},
+        {"lat": 45, "lng": -80, "intensity": 0.8}
+      ]
+    },
+    {
+      "id": "holocene-optimum",
+      "name": "Holocene Climate Optimum",
+      "type": "warming",
+      "start": -7000,
+      "end": -3000,
+      "severity": "beneficial",
+      "description": "Warmest period of the current interglacial. 2-3°C warmer than present. Sahara was green with lakes.",
+      "impacts": [
+        "Green Sahara - supported large populations",
+        "Agriculture spread rapidly",
+        "First civilizations emerged"
+      ],
+      "affected_regions": [
+        {"lat": 25, "lng": 15, "intensity": 0.8},
+        {"lat": 35, "lng": 45, "intensity": 0.6},
+        {"lat": 55, "lng": 10, "intensity": 0.5}
+      ]
+    },
+    {
+      "id": "4200-event",
+      "name": "4.2 Kiloyear Event",
+      "type": "drought",
+      "start": -2200,
+      "end": -1900,
+      "severity": "severe",
+      "description": "Severe drought lasting 300 years. Contributed to collapse of multiple Bronze Age civilizations.",
+      "impacts": [
+        "Old Kingdom Egypt collapsed",
+        "Akkadian Empire fell",
+        "Indus Valley civilization declined",
+        "Mass migrations across Middle East"
+      ],
+      "affected_regions": [
+        {"lat": 26, "lng": 31, "intensity": 0.9},
+        {"lat": 33, "lng": 44, "intensity": 0.95},
+        {"lat": 27, "lng": 68, "intensity": 0.8},
+        {"lat": 35, "lng": 45, "intensity": 0.85}
+      ]
+    },
+    {
+      "id": "bronze-age-collapse",
+      "name": "Late Bronze Age Collapse",
+      "type": "drought",
+      "start": -1200,
+      "end": -1150,
+      "severity": "severe",
+      "description": "Severe drought and climate instability contributed to collapse of every major Bronze Age civilization.",
+      "impacts": [
+        "Hittite Empire destroyed",
+        "Mycenaean Greece fell",
+        "Egyptian New Kingdom weakened",
+        "Sea Peoples migrations"
+      ],
+      "affected_regions": [
+        {"lat": 39, "lng": 35, "intensity": 0.9},
+        {"lat": 38, "lng": 24, "intensity": 0.85},
+        {"lat": 26, "lng": 31, "intensity": 0.8},
+        {"lat": 35, "lng": 35, "intensity": 0.9}
+      ]
+    },
+    {
+      "id": "roman-warm",
+      "name": "Roman Warm Period",
+      "type": "warming",
+      "start": -200,
+      "end": 400,
+      "severity": "beneficial",
+      "description": "Warm, stable climate coinciding with Roman expansion. Enabled agriculture in Northern Europe.",
+      "impacts": [
+        "Roman agriculture expanded northward",
+        "Wine grown in Britain",
+        "Stable food production supported empire",
+        "Population growth across Mediterranean"
+      ],
+      "affected_regions": [
+        {"lat": 42, "lng": 12, "intensity": 0.6},
+        {"lat": 48, "lng": 5, "intensity": 0.5},
+        {"lat": 52, "lng": 0, "intensity": 0.4}
+      ]
+    },
+    {
+      "id": "late-antique-cold",
+      "name": "Late Antique Little Ice Age",
+      "type": "cooling",
+      "start": 536,
+      "end": 660,
+      "severity": "severe",
+      "description": "Volcanic winters and cooling. 536 CE was 'worst year to be alive' - volcanic dust blocked sun for 18 months.",
+      "impacts": [
+        "Justinianic Plague killed millions",
+        "Crop failures across Eurasia",
+        "Fall of Roman Britain",
+        "Sasanian-Byzantine exhaustion",
+        "Enabled Arab conquests"
+      ],
+      "affected_regions": [
+        {"lat": 41, "lng": 29, "intensity": 0.85},
+        {"lat": 48, "lng": 10, "intensity": 0.9},
+        {"lat": 35, "lng": 110, "intensity": 0.7},
+        {"lat": 60, "lng": 10, "intensity": 0.8}
+      ]
+    },
+    {
+      "id": "medieval-warm",
+      "name": "Medieval Warm Period",
+      "type": "warming",
+      "start": 900,
+      "end": 1300,
+      "severity": "beneficial",
+      "description": "Warm period enabling Viking exploration, agricultural expansion, and population growth.",
+      "impacts": [
+        "Vikings colonized Greenland and reached Vinland",
+        "European population doubled",
+        "Cathedrals built during agricultural surplus",
+        "Wine production expanded in England"
+      ],
+      "affected_regions": [
+        {"lat": 65, "lng": -20, "intensity": 0.7},
+        {"lat": 48, "lng": 10, "intensity": 0.5},
+        {"lat": 52, "lng": 0, "intensity": 0.5},
+        {"lat": 60, "lng": 10, "intensity": 0.6}
+      ]
+    },
+    {
+      "id": "mongol-drought",
+      "name": "Central Asian Drought",
+      "type": "drought",
+      "start": 1180,
+      "end": 1220,
+      "severity": "moderate",
+      "description": "Extended drought on Mongolian steppes may have driven Mongol expansion seeking new pastures.",
+      "impacts": [
+        "Mongol tribes unified under Genghis Khan",
+        "Nomads pushed outward seeking resources",
+        "Triggered largest land empire in history"
+      ],
+      "affected_regions": [
+        {"lat": 46, "lng": 105, "intensity": 0.8},
+        {"lat": 42, "lng": 75, "intensity": 0.7}
+      ]
+    },
+    {
+      "id": "little-ice-age",
+      "name": "Little Ice Age",
+      "type": "cooling",
+      "start": 1300,
+      "end": 1850,
+      "severity": "moderate",
+      "description": "Centuries of cooler temperatures, advancing glaciers, and harsher winters. Peak severity 1645-1715.",
+      "impacts": [
+        "Great Famine (1315-1317) killed millions",
+        "Black Death spread in weakened populations",
+        "Norse Greenland colonies died out",
+        "Thames River froze regularly",
+        "French Revolution partly caused by crop failures"
+      ],
+      "affected_regions": [
+        {"lat": 48, "lng": 10, "intensity": 0.7},
+        {"lat": 55, "lng": 0, "intensity": 0.8},
+        {"lat": 65, "lng": -40, "intensity": 0.9},
+        {"lat": 60, "lng": 10, "intensity": 0.75}
+      ]
+    },
+    {
+      "id": "maya-drought",
+      "name": "Terminal Classic Maya Drought",
+      "type": "drought",
+      "start": 800,
+      "end": 1000,
+      "severity": "severe",
+      "description": "Series of severe droughts that contributed to Classic Maya civilization collapse.",
+      "impacts": [
+        "Maya cities abandoned",
+        "Population declined 90% in some areas",
+        "Political fragmentation",
+        "Shift from interior to coastal settlements"
+      ],
+      "affected_regions": [
+        {"lat": 17, "lng": -90, "intensity": 0.95},
+        {"lat": 20, "lng": -87, "intensity": 0.9}
+      ]
+    },
+    {
+      "id": "1816-volcano",
+      "name": "Year Without a Summer",
+      "type": "volcanic",
+      "start": 1816,
+      "end": 1817,
+      "severity": "severe",
+      "description": "Mount Tambora eruption (1815) caused global cooling, crop failures, and famine.",
+      "impacts": [
+        "Snow in June in New England",
+        "Crop failures across Northern Hemisphere",
+        "Famine in Europe",
+        "Inspired Frankenstein (Mary Shelley wrote during gloomy summer)"
+      ],
+      "affected_regions": [
+        {"lat": 48, "lng": 10, "intensity": 0.8},
+        {"lat": 42, "lng": -75, "intensity": 0.75},
+        {"lat": 55, "lng": 0, "intensity": 0.7}
+      ]
+    },
+    {
+      "id": "dust-bowl",
+      "name": "Dust Bowl",
+      "type": "drought",
+      "start": 1930,
+      "end": 1940,
+      "severity": "severe",
+      "description": "Severe drought combined with poor farming practices created ecological disaster on American Great Plains.",
+      "impacts": [
+        "2.5 million people displaced",
+        "Topsoil blown away in massive dust storms",
+        "Economic devastation during Depression",
+        "Led to soil conservation movement"
+      ],
+      "affected_regions": [
+        {"lat": 37, "lng": -100, "intensity": 0.95},
+        {"lat": 35, "lng": -102, "intensity": 0.9}
+      ]
+    },
+    {
+      "id": "sahel-drought",
+      "name": "Sahel Drought",
+      "type": "drought",
+      "start": 1968,
+      "end": 1990,
+      "severity": "severe",
+      "description": "Multi-decade drought across Africa's Sahel region caused massive famine and displacement.",
+      "impacts": [
+        "Over 1 million deaths from famine",
+        "Lake Chad shrank 90%",
+        "Mass migrations southward",
+        "Desertification accelerated"
+      ],
+      "affected_regions": [
+        {"lat": 15, "lng": 0, "intensity": 0.9},
+        {"lat": 13, "lng": 14, "intensity": 0.95},
+        {"lat": 14, "lng": -10, "intensity": 0.85}
+      ]
+    }
+  ]
+}

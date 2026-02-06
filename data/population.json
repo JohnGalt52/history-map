@@ -1,0 +1,344 @@
+{
+  "metadata": {
+    "generated": "2026-02-05",
+    "description": "Historical world population estimates by region",
+    "sources": [
+      "McEvedy, Colin & Jones, Richard. Atlas of World Population History (1978)",
+      "Maddison, Angus. The World Economy: Historical Statistics (2003)",
+      "United Nations Population Division",
+      "Klein Goldewijk, Kees. HYDE 3.2 Database (2017)"
+    ],
+    "notes": "All figures in thousands. Estimates before 1000 CE have high uncertainty."
+  },
+  "snapshots": [
+    {
+      "year": -100000,
+      "total": 10,
+      "regions": [
+        {"name": "East Africa", "lat": -3, "lng": 37, "population": 10, "density": "low"}
+      ]
+    },
+    {
+      "year": -50000,
+      "total": 500,
+      "regions": [
+        {"name": "Africa", "lat": 0, "lng": 20, "population": 300, "density": "low"},
+        {"name": "Middle East", "lat": 32, "lng": 45, "population": 100, "density": "low"},
+        {"name": "South Asia", "lat": 20, "lng": 78, "population": 50, "density": "low"},
+        {"name": "Southeast Asia", "lat": 5, "lng": 110, "population": 50, "density": "low"}
+      ]
+    },
+    {
+      "year": -10000,
+      "total": 5000,
+      "regions": [
+        {"name": "Africa", "lat": 0, "lng": 20, "population": 1000, "density": "low"},
+        {"name": "Middle East", "lat": 32, "lng": 45, "population": 500, "density": "medium"},
+        {"name": "South Asia", "lat": 20, "lng": 78, "population": 1000, "density": "low"},
+        {"name": "East Asia", "lat": 35, "lng": 110, "population": 1000, "density": "low"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 500, "density": "low"},
+        {"name": "Southeast Asia", "lat": 5, "lng": 110, "population": 500, "density": "low"},
+        {"name": "Americas", "lat": 20, "lng": -100, "population": 500, "density": "low"}
+      ]
+    },
+    {
+      "year": -5000,
+      "total": 15000,
+      "regions": [
+        {"name": "Mesopotamia", "lat": 33, "lng": 44, "population": 1500, "density": "high"},
+        {"name": "Egypt", "lat": 26, "lng": 31, "population": 1000, "density": "high"},
+        {"name": "Indus Valley", "lat": 27, "lng": 68, "population": 1000, "density": "medium"},
+        {"name": "China (Yellow River)", "lat": 35, "lng": 113, "population": 2000, "density": "medium"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 2000, "density": "low"},
+        {"name": "Africa (other)", "lat": 5, "lng": 20, "population": 3000, "density": "low"},
+        {"name": "South Asia", "lat": 20, "lng": 78, "population": 2000, "density": "low"},
+        {"name": "Southeast Asia", "lat": 5, "lng": 110, "population": 1000, "density": "low"},
+        {"name": "Americas", "lat": 20, "lng": -100, "population": 1500, "density": "low"}
+      ]
+    },
+    {
+      "year": -3000,
+      "total": 30000,
+      "regions": [
+        {"name": "Mesopotamia", "lat": 33, "lng": 44, "population": 3000, "density": "high"},
+        {"name": "Egypt", "lat": 26, "lng": 31, "population": 2000, "density": "high"},
+        {"name": "Indus Valley", "lat": 27, "lng": 68, "population": 2000, "density": "high"},
+        {"name": "China", "lat": 35, "lng": 113, "population": 5000, "density": "medium"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 4000, "density": "low"},
+        {"name": "Africa", "lat": 5, "lng": 20, "population": 5000, "density": "low"},
+        {"name": "South Asia", "lat": 20, "lng": 78, "population": 4000, "density": "low"},
+        {"name": "Southeast Asia", "lat": 5, "lng": 110, "population": 2000, "density": "low"},
+        {"name": "Americas", "lat": 20, "lng": -100, "population": 3000, "density": "low"}
+      ]
+    },
+    {
+      "year": -1000,
+      "total": 72000,
+      "regions": [
+        {"name": "Mesopotamia/Persia", "lat": 33, "lng": 50, "population": 6000, "density": "high"},
+        {"name": "Egypt", "lat": 26, "lng": 31, "population": 3000, "density": "high"},
+        {"name": "Levant", "lat": 32, "lng": 35, "population": 2000, "density": "high"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 15000, "density": "medium"},
+        {"name": "China", "lat": 35, "lng": 113, "population": 20000, "density": "high"},
+        {"name": "Europe", "lat": 45, "lng": 10, "population": 8000, "density": "low"},
+        {"name": "Africa", "lat": 5, "lng": 20, "population": 8000, "density": "low"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 4000, "density": "low"},
+        {"name": "Central Asia", "lat": 42, "lng": 65, "population": 2000, "density": "low"},
+        {"name": "Americas", "lat": 20, "lng": -100, "population": 4000, "density": "low"}
+      ]
+    },
+    {
+      "year": -500,
+      "total": 100000,
+      "regions": [
+        {"name": "Persian Empire", "lat": 32, "lng": 52, "population": 17000, "density": "high"},
+        {"name": "Greece", "lat": 38, "lng": 24, "population": 3000, "density": "high"},
+        {"name": "Egypt", "lat": 26, "lng": 31, "population": 4000, "density": "high"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 25000, "density": "high"},
+        {"name": "China", "lat": 35, "lng": 113, "population": 30000, "density": "high"},
+        {"name": "Europe (other)", "lat": 48, "lng": 10, "population": 8000, "density": "medium"},
+        {"name": "Africa", "lat": 5, "lng": 20, "population": 8000, "density": "low"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 5000, "density": "low"},
+        {"name": "Americas", "lat": 20, "lng": -100, "population": 5000, "density": "low"}
+      ]
+    },
+    {
+      "year": 1,
+      "total": 231000,
+      "regions": [
+        {"name": "Roman Empire", "lat": 42, "lng": 12, "population": 46000, "density": "high"},
+        {"name": "Parthian Empire", "lat": 33, "lng": 52, "population": 8000, "density": "medium"},
+        {"name": "India (Maurya/Kushan)", "lat": 22, "lng": 78, "population": 50000, "density": "high"},
+        {"name": "Han China", "lat": 35, "lng": 113, "population": 60000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 8000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 12000, "density": "low"},
+        {"name": "Central Asia", "lat": 42, "lng": 65, "population": 5000, "density": "low"},
+        {"name": "Japan/Korea", "lat": 36, "lng": 138, "population": 3000, "density": "medium"},
+        {"name": "Mesoamerica", "lat": 19, "lng": -99, "population": 5000, "density": "medium"},
+        {"name": "Andes", "lat": -12, "lng": -75, "population": 3000, "density": "medium"},
+        {"name": "North America", "lat": 40, "lng": -100, "population": 1000, "density": "low"}
+      ]
+    },
+    {
+      "year": 200,
+      "total": 257000,
+      "regions": [
+        {"name": "Roman Empire", "lat": 42, "lng": 12, "population": 50000, "density": "high"},
+        {"name": "Parthian Empire", "lat": 33, "lng": 52, "population": 10000, "density": "medium"},
+        {"name": "India (Kushan/Satavahana)", "lat": 22, "lng": 78, "population": 55000, "density": "high"},
+        {"name": "Han China", "lat": 35, "lng": 113, "population": 65000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 10000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 15000, "density": "low"},
+        {"name": "Central Asia", "lat": 42, "lng": 65, "population": 6000, "density": "low"},
+        {"name": "Japan/Korea", "lat": 36, "lng": 138, "population": 5000, "density": "medium"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 11000, "density": "low"}
+      ]
+    },
+    {
+      "year": 500,
+      "total": 210000,
+      "regions": [
+        {"name": "Byzantine Empire", "lat": 41, "lng": 29, "population": 12000, "density": "medium"},
+        {"name": "Western Europe", "lat": 48, "lng": 5, "population": 15000, "density": "low"},
+        {"name": "Sassanid Persia", "lat": 33, "lng": 52, "population": 10000, "density": "medium"},
+        {"name": "India (Gupta)", "lat": 22, "lng": 78, "population": 50000, "density": "high"},
+        {"name": "China (fragmented)", "lat": 35, "lng": 113, "population": 50000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 12000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 20000, "density": "low"},
+        {"name": "Central Asia", "lat": 42, "lng": 65, "population": 8000, "density": "low"},
+        {"name": "Japan/Korea", "lat": 36, "lng": 138, "population": 8000, "density": "medium"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 15000, "density": "low"}
+      ],
+      "notes": "Population decline from Roman collapse, plagues, climate instability"
+    },
+    {
+      "year": 800,
+      "total": 240000,
+      "regions": [
+        {"name": "Abbasid Caliphate", "lat": 33, "lng": 44, "population": 30000, "density": "high"},
+        {"name": "Byzantine Empire", "lat": 41, "lng": 29, "population": 8000, "density": "medium"},
+        {"name": "Carolingian Europe", "lat": 48, "lng": 5, "population": 18000, "density": "low"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 55000, "density": "high"},
+        {"name": "Tang China", "lat": 35, "lng": 113, "population": 60000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 15000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 25000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 6000, "density": "medium"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 18000, "density": "low"}
+      ]
+    },
+    {
+      "year": 1000,
+      "total": 295000,
+      "regions": [
+        {"name": "Islamic World", "lat": 30, "lng": 45, "population": 35000, "density": "high"},
+        {"name": "Byzantine Empire", "lat": 41, "lng": 29, "population": 10000, "density": "medium"},
+        {"name": "Western Europe", "lat": 48, "lng": 5, "population": 30000, "density": "medium"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 70000, "density": "high"},
+        {"name": "Song China", "lat": 32, "lng": 118, "population": 80000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 18000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 30000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 8000, "density": "medium"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 20000, "density": "low"}
+      ]
+    },
+    {
+      "year": 1200,
+      "total": 393000,
+      "regions": [
+        {"name": "Islamic World", "lat": 30, "lng": 45, "population": 45000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 60000, "density": "medium"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 85000, "density": "high"},
+        {"name": "Song China", "lat": 32, "lng": 118, "population": 115000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 22000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 35000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 12000, "density": "high"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 25000, "density": "medium"}
+      ]
+    },
+    {
+      "year": 1340,
+      "total": 443000,
+      "regions": [
+        {"name": "Islamic World", "lat": 30, "lng": 45, "population": 50000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 75000, "density": "high"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 100000, "density": "high"},
+        {"name": "Yuan China", "lat": 35, "lng": 113, "population": 120000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 25000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 40000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 15000, "density": "high"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 30000, "density": "medium"}
+      ],
+      "notes": "Peak before Black Death"
+    },
+    {
+      "year": 1400,
+      "total": 374000,
+      "regions": [
+        {"name": "Islamic World", "lat": 30, "lng": 45, "population": 40000, "density": "medium"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 52000, "density": "medium"},
+        {"name": "India", "lat": 22, "lng": 78, "population": 90000, "density": "high"},
+        {"name": "Ming China", "lat": 35, "lng": 113, "population": 100000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 22000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 35000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 12000, "density": "medium"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 35000, "density": "medium"}
+      ],
+      "notes": "Post-Black Death collapse - 1/3 of Eurasia died"
+    },
+    {
+      "year": 1500,
+      "total": 461000,
+      "regions": [
+        {"name": "Ottoman Empire", "lat": 39, "lng": 32, "population": 25000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 70000, "density": "medium"},
+        {"name": "India (Delhi/Vijayanagara)", "lat": 22, "lng": 78, "population": 110000, "density": "high"},
+        {"name": "Ming China", "lat": 35, "lng": 113, "population": 125000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 28000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 40000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 17000, "density": "high"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 50000, "density": "medium"},
+        {"name": "Persia (Safavid)", "lat": 32, "lng": 52, "population": 8000, "density": "medium"}
+      ],
+      "notes": "Eve of Columbian Exchange"
+    },
+    {
+      "year": 1600,
+      "total": 545000,
+      "regions": [
+        {"name": "Ottoman Empire", "lat": 39, "lng": 32, "population": 30000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 100000, "density": "high"},
+        {"name": "Mughal India", "lat": 22, "lng": 78, "population": 145000, "density": "high"},
+        {"name": "Ming China", "lat": 35, "lng": 113, "population": 160000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 32000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 45000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 22000, "density": "high"},
+        {"name": "Americas", "lat": 10, "lng": -80, "population": 15000, "density": "low"},
+        {"name": "Persia", "lat": 32, "lng": 52, "population": 10000, "density": "medium"}
+      ],
+      "notes": "Americas collapsed 90% from disease - Columbian Exchange devastation"
+    },
+    {
+      "year": 1700,
+      "total": 603000,
+      "regions": [
+        {"name": "Ottoman Empire", "lat": 39, "lng": 32, "population": 28000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 120000, "density": "high"},
+        {"name": "Mughal India", "lat": 22, "lng": 78, "population": 165000, "density": "high"},
+        {"name": "Qing China", "lat": 35, "lng": 113, "population": 175000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 35000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 50000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 28000, "density": "high"},
+        {"name": "Americas", "lat": 25, "lng": -80, "population": 12000, "density": "low"},
+        {"name": "Persia", "lat": 32, "lng": 52, "population": 9000, "density": "medium"}
+      ]
+    },
+    {
+      "year": 1800,
+      "total": 978000,
+      "regions": [
+        {"name": "Ottoman Empire", "lat": 39, "lng": 32, "population": 28000, "density": "high"},
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 190000, "density": "high"},
+        {"name": "British India", "lat": 22, "lng": 78, "population": 185000, "density": "high"},
+        {"name": "Qing China", "lat": 35, "lng": 113, "population": 330000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 45000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 70000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 30000, "density": "high"},
+        {"name": "Americas", "lat": 25, "lng": -80, "population": 25000, "density": "low"},
+        {"name": "USA", "lat": 38, "lng": -98, "population": 5000, "density": "low"},
+        {"name": "Persia", "lat": 32, "lng": 52, "population": 8000, "density": "medium"},
+        {"name": "Russia", "lat": 55, "lng": 50, "population": 35000, "density": "low"}
+      ]
+    },
+    {
+      "year": 1900,
+      "total": 1650000,
+      "regions": [
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 400000, "density": "high"},
+        {"name": "Russia", "lat": 55, "lng": 50, "population": 125000, "density": "medium"},
+        {"name": "British India", "lat": 22, "lng": 78, "population": 290000, "density": "high"},
+        {"name": "Qing China", "lat": 35, "lng": 113, "population": 400000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 75000, "density": "medium"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 95000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 44000, "density": "high"},
+        {"name": "Latin America", "lat": -10, "lng": -55, "population": 65000, "density": "low"},
+        {"name": "USA", "lat": 38, "lng": -98, "population": 76000, "density": "medium"},
+        {"name": "Canada/Australia/NZ", "lat": 50, "lng": -100, "population": 12000, "density": "low"},
+        {"name": "Middle East", "lat": 30, "lng": 45, "population": 35000, "density": "medium"}
+      ]
+    },
+    {
+      "year": 1950,
+      "total": 2536000,
+      "regions": [
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 547000, "density": "high"},
+        {"name": "USSR", "lat": 55, "lng": 50, "population": 180000, "density": "medium"},
+        {"name": "India/Pakistan", "lat": 22, "lng": 78, "population": 376000, "density": "high"},
+        {"name": "China", "lat": 35, "lng": 113, "population": 554000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 178000, "density": "high"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 180000, "density": "low"},
+        {"name": "Japan", "lat": 36, "lng": 138, "population": 84000, "density": "high"},
+        {"name": "Latin America", "lat": -10, "lng": -55, "population": 167000, "density": "medium"},
+        {"name": "USA", "lat": 38, "lng": -98, "population": 158000, "density": "medium"},
+        {"name": "Middle East", "lat": 30, "lng": 45, "population": 75000, "density": "medium"},
+        {"name": "Canada/Australia/NZ", "lat": 50, "lng": -100, "population": 25000, "density": "low"}
+      ]
+    },
+    {
+      "year": 2000,
+      "total": 6127000,
+      "regions": [
+        {"name": "Europe", "lat": 48, "lng": 10, "population": 727000, "density": "high"},
+        {"name": "Russia/CIS", "lat": 55, "lng": 50, "population": 286000, "density": "medium"},
+        {"name": "South Asia", "lat": 22, "lng": 78, "population": 1396000, "density": "high"},
+        {"name": "China", "lat": 35, "lng": 113, "population": 1275000, "density": "high"},
+        {"name": "Southeast Asia", "lat": 10, "lng": 105, "population": 524000, "density": "high"},
+        {"name": "Sub-Saharan Africa", "lat": 5, "lng": 20, "population": 642000, "density": "medium"},
+        {"name": "Japan/Korea", "lat": 36, "lng": 133, "population": 174000, "density": "high"},
+        {"name": "Latin America", "lat": -10, "lng": -55, "population": 521000, "density": "medium"},
+        {"name": "USA/Canada", "lat": 40, "lng": -98, "population": 314000, "density": "medium"},
+        {"name": "Middle East/N.Africa", "lat": 28, "lng": 35, "population": 315000, "density": "medium"},
+        {"name": "Australia/Oceania", "lat": -25, "lng": 135, "population": 31000, "density": "low"}
+      ]
+    }
+  ]
+}

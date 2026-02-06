@@ -1,0 +1,543 @@
+{
+  "metadata": {
+    "generated": "2026-02-05",
+    "description": "Technology dependency tree with spread data",
+    "sources": ["Mokyr, Joel. The Lever of Riches (1990)", "Diamond, Jared. Guns, Germs, and Steel (1997)", "Needham, Joseph. Science and Civilisation in China"]
+  },
+  "technologies": [
+    {
+      "id": "fire-control",
+      "name": "Fire Control",
+      "category": "fundamental",
+      "origin": {"region": "Africa", "lat": -1.29, "lng": 36.82, "date": -400000},
+      "requires": [],
+      "enables": ["cooking", "heat-treatment", "pottery"],
+      "description": "Controlled use of fire for warmth, protection, and cooking. Fundamental to human development.",
+      "impact": "Enabled cooked food (more calories, smaller gut, larger brain), warmth in cold climates, protection from predators",
+      "sources": ["Wrangham, Richard. Catching Fire: How Cooking Made Us Human (2009)"]
+    },
+    {
+      "id": "cooking",
+      "name": "Cooking",
+      "category": "fundamental",
+      "origin": {"region": "Africa", "lat": -1.29, "lng": 36.82, "date": -250000},
+      "requires": ["fire-control"],
+      "enables": ["food-preservation", "pottery"],
+      "description": "Heat treatment of food for safety and nutrition.",
+      "impact": "Increased caloric availability, reduced disease, enabled larger brains",
+      "sources": ["Wrangham, Richard. Catching Fire (2009)"]
+    },
+    {
+      "id": "stone-tools",
+      "name": "Stone Tools",
+      "category": "fundamental",
+      "origin": {"region": "East Africa", "lat": -3.07, "lng": 37.35, "date": -2600000},
+      "requires": [],
+      "enables": ["woodworking", "hunting", "hide-working"],
+      "description": "Shaped stones for cutting, scraping, and pounding.",
+      "impact": "Foundation of all tool-making, enabled hunting, food processing",
+      "sources": ["Schick, Kathy & Toth, Nicholas. Making Silent Stones Speak (1993)"]
+    },
+    {
+      "id": "woodworking",
+      "name": "Woodworking",
+      "category": "crafts",
+      "origin": {"region": "Africa/Eurasia", "lat": 35.0, "lng": 35.0, "date": -400000},
+      "requires": ["stone-tools"],
+      "enables": ["wheel", "boats", "construction", "bow-and-arrow"],
+      "description": "Shaping wood into tools, weapons, and structures.",
+      "impact": "Enabled spears, shelters, boats, and eventually complex construction",
+      "sources": ["Perlin, John. A Forest Journey (1989)"]
+    },
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "category": "fundamental",
+      "origin": {"region": "Fertile Crescent", "lat": 36.5, "lng": 38.0, "date": -10000},
+      "requires": ["stone-tools"],
+      "enables": ["irrigation", "animal-domestication", "surplus-storage", "permanent-settlements"],
+      "independent_inventions": [
+        {"region": "Fertile Crescent", "lat": 36.5, "lng": 38.0, "date": -10000, "crops": ["wheat", "barley"]},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -8000, "crops": ["rice", "millet"]},
+        {"region": "Mesoamerica", "lat": 19.0, "lng": -99.0, "date": -7000, "crops": ["maize", "squash"]},
+        {"region": "Andes", "lat": -13.5, "lng": -72.0, "date": -6000, "crops": ["potato", "quinoa"]},
+        {"region": "New Guinea", "lat": -5.0, "lng": 145.0, "date": -7000, "crops": ["taro", "banana"]}
+      ],
+      "description": "Deliberate cultivation of plants for food.",
+      "impact": "Enabled permanent settlements, population growth, social hierarchy, civilization itself",
+      "sources": ["Diamond, Jared. Guns, Germs, and Steel (1997)", "Bellwood, Peter. First Farmers (2005)"]
+    },
+    {
+      "id": "animal-domestication",
+      "name": "Animal Domestication",
+      "category": "fundamental",
+      "origin": {"region": "Fertile Crescent", "lat": 37.0, "lng": 40.0, "date": -9000},
+      "requires": ["agriculture"],
+      "enables": ["wool-textiles", "plow", "horse-riding", "dairy"],
+      "independent_inventions": [
+        {"region": "Fertile Crescent", "lat": 37.0, "lng": 40.0, "date": -9000, "animals": ["sheep", "goat"]},
+        {"region": "Central Asia", "lat": 42.0, "lng": 60.0, "date": -4000, "animals": ["horse"]},
+        {"region": "Indus Valley", "lat": 27.0, "lng": 68.0, "date": -7000, "animals": ["cattle", "water buffalo"]},
+        {"region": "Andes", "lat": -15.0, "lng": -70.0, "date": -4000, "animals": ["llama", "alpaca"]},
+        {"region": "Arabia", "lat": 24.0, "lng": 45.0, "date": -3000, "animals": ["camel"]}
+      ],
+      "description": "Breeding and keeping animals for food, labor, and materials.",
+      "impact": "Provided meat, milk, wool, transportation, and labor power",
+      "sources": ["Clutton-Brock, Juliet. A Natural History of Domesticated Mammals (1999)"]
+    },
+    {
+      "id": "pottery",
+      "name": "Pottery",
+      "category": "crafts",
+      "origin": {"region": "East Asia", "lat": 29.0, "lng": 111.0, "date": -18000},
+      "requires": ["fire-control"],
+      "enables": ["food-preservation", "metallurgy-crucibles", "writing-tablets"],
+      "spread": [
+        {"region": "Japan", "lat": 35.0, "lng": 139.0, "date": -14000},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -18000},
+        {"region": "Middle East", "lat": 33.0, "lng": 44.0, "date": -7000},
+        {"region": "Europe", "lat": 45.0, "lng": 15.0, "date": -6500}
+      ],
+      "description": "Fired clay vessels for storage, cooking, and transport.",
+      "impact": "Enabled food storage, brewing, water transport",
+      "sources": ["Rice, Prudence. Pottery Analysis (2015)"]
+    },
+    {
+      "id": "copper-smelting",
+      "name": "Copper Smelting",
+      "category": "metallurgy",
+      "origin": {"region": "Anatolia", "lat": 39.0, "lng": 35.0, "date": -7000},
+      "requires": ["fire-control", "pottery"],
+      "enables": ["bronze-working"],
+      "spread": [
+        {"region": "Balkans", "lat": 42.0, "lng": 25.0, "date": -5000},
+        {"region": "Mesopotamia", "lat": 33.0, "lng": 44.0, "date": -4500},
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -4000},
+        {"region": "Indus", "lat": 27.0, "lng": 68.0, "date": -3300}
+      ],
+      "description": "Extracting copper from ore using heat.",
+      "impact": "First metal tools and weapons, beginning of metallurgy",
+      "sources": ["Roberts, Benjamin. Production and Consumption of Copper (2009)"]
+    },
+    {
+      "id": "bronze-working",
+      "name": "Bronze Working",
+      "category": "metallurgy",
+      "origin": {"region": "Mesopotamia", "lat": 33.0, "lng": 44.0, "date": -3300},
+      "requires": ["copper-smelting"],
+      "enables": ["iron-smelting", "wheel", "advanced-weapons"],
+      "spread": [
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -3000},
+        {"region": "Indus", "lat": 27.0, "lng": 68.0, "date": -3000},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -2000},
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": -2300}
+      ],
+      "description": "Alloying copper with tin to create harder bronze.",
+      "impact": "Superior weapons and tools, drove long-distance tin trade",
+      "sources": ["Muhly, James. Copper and Tin (1973)"]
+    },
+    {
+      "id": "wheel",
+      "name": "Wheel",
+      "category": "transport",
+      "origin": {"region": "Mesopotamia/Pontic Steppe", "lat": 46.0, "lng": 35.0, "date": -3500},
+      "requires": ["woodworking", "bronze-working"],
+      "enables": ["chariot", "pottery-wheel", "pulley", "gears", "water-wheel"],
+      "spread": [
+        {"region": "Mesopotamia", "lat": 33.0, "lng": 44.0, "date": -3500},
+        {"region": "Caucasus", "lat": 42.0, "lng": 44.0, "date": -3400},
+        {"region": "Indus", "lat": 27.0, "lng": 68.0, "date": -3000},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -2000},
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -1600}
+      ],
+      "description": "Rotating disk for transport, pottery, and machinery.",
+      "impact": "Revolutionized transport, trade, warfare, and manufacturing",
+      "sources": ["Bakker, Jan Albert. The TRB West Group (1979)", "Anthony, David. The Horse, the Wheel, and Language (2007)"]
+    },
+    {
+      "id": "writing",
+      "name": "Writing",
+      "category": "communication",
+      "origin": {"region": "Mesopotamia", "lat": 31.3, "lng": 45.6, "date": -3400},
+      "requires": ["agriculture", "permanent-settlements"],
+      "enables": ["mathematics", "law-codes", "literature", "record-keeping", "astronomy"],
+      "independent_inventions": [
+        {"region": "Mesopotamia", "lat": 31.3, "lng": 45.6, "date": -3400, "system": "Cuneiform"},
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -3200, "system": "Hieroglyphics"},
+        {"region": "Indus Valley", "lat": 27.0, "lng": 68.0, "date": -2600, "system": "Indus script (undeciphered)"},
+        {"region": "China", "lat": 34.5, "lng": 112.5, "date": -1200, "system": "Oracle bone script"},
+        {"region": "Mesoamerica", "lat": 17.0, "lng": -96.0, "date": -600, "system": "Zapotec/Maya"}
+      ],
+      "description": "Symbolic representation of language.",
+      "impact": "Enabled record-keeping, law, literature, accumulated knowledge across generations",
+      "sources": ["Robinson, Andrew. The Story of Writing (1995)"]
+    },
+    {
+      "id": "iron-smelting",
+      "name": "Iron Smelting",
+      "category": "metallurgy",
+      "origin": {"region": "Anatolia (Hittites)", "lat": 40.0, "lng": 34.0, "date": -1800},
+      "requires": ["bronze-working"],
+      "enables": ["steel", "iron-plows", "iron-weapons"],
+      "spread": [
+        {"region": "Mesopotamia", "lat": 33.0, "lng": 44.0, "date": -1200},
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -1000},
+        {"region": "India", "lat": 26.0, "lng": 80.0, "date": -1100},
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": -800},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -600},
+        {"region": "Sub-Saharan Africa", "lat": 10.0, "lng": 15.0, "date": -500}
+      ],
+      "description": "Extracting iron from ore at high temperatures.",
+      "impact": "Cheaper, more abundant than bronze. Democratized metal tools.",
+      "sources": ["Wertime, Theodore. The Coming of the Age of Iron (1980)"]
+    },
+    {
+      "id": "alphabet",
+      "name": "Alphabet",
+      "category": "communication",
+      "origin": {"region": "Sinai/Canaan", "lat": 30.5, "lng": 34.5, "date": -1800},
+      "requires": ["writing"],
+      "enables": ["widespread-literacy", "easier-learning"],
+      "spread": [
+        {"region": "Phoenicia", "lat": 33.9, "lng": 35.5, "date": -1050},
+        {"region": "Greece", "lat": 38.0, "lng": 24.0, "date": -800},
+        {"region": "Italy", "lat": 42.0, "lng": 12.5, "date": -700},
+        {"region": "India (Brahmi)", "lat": 26.0, "lng": 80.0, "date": -300},
+        {"region": "Arabia", "lat": 24.0, "lng": 45.0, "date": -100}
+      ],
+      "description": "Writing system where symbols represent sounds, not concepts.",
+      "impact": "Dramatically simplified writing - learnable in weeks instead of years",
+      "sources": ["Sass, Benjamin. The Genesis of the Alphabet (1988)"]
+    },
+    {
+      "id": "horse-riding",
+      "name": "Horse Riding",
+      "category": "transport",
+      "origin": {"region": "Pontic-Caspian Steppe", "lat": 47.0, "lng": 42.0, "date": -4200},
+      "requires": ["animal-domestication"],
+      "enables": ["chariot", "cavalry", "mounted-archery", "rapid-communication"],
+      "spread": [
+        {"region": "Central Asia", "lat": 42.0, "lng": 65.0, "date": -3500},
+        {"region": "Near East", "lat": 36.0, "lng": 40.0, "date": -2500},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -1300}
+      ],
+      "description": "Using horses for transport and warfare.",
+      "impact": "Revolutionized warfare, communication, and steppe empires",
+      "sources": ["Anthony, David. The Horse, the Wheel, and Language (2007)"]
+    },
+    {
+      "id": "chariot",
+      "name": "Chariot",
+      "category": "military",
+      "origin": {"region": "Pontic-Caspian Steppe", "lat": 47.0, "lng": 40.0, "date": -2000},
+      "requires": ["wheel", "horse-riding"],
+      "enables": ["cavalry-warfare", "rapid-conquest"],
+      "spread": [
+        {"region": "Near East", "lat": 36.0, "lng": 40.0, "date": -1800},
+        {"region": "Egypt", "lat": 26.0, "lng": 31.0, "date": -1600},
+        {"region": "China", "lat": 34.0, "lng": 113.0, "date": -1200},
+        {"region": "India", "lat": 26.0, "lng": 80.0, "date": -1500}
+      ],
+      "description": "Light, fast, two-wheeled vehicle for warfare.",
+      "impact": "Dominated Bronze Age warfare, enabled rapid conquest",
+      "sources": ["Drews, Robert. The Coming of the Greeks (1988)"]
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "category": "communication",
+      "origin": {"region": "China", "lat": 34.0, "lng": 108.0, "date": -100},
+      "requires": ["writing"],
+      "enables": ["printing", "bureaucracy", "widespread-record-keeping"],
+      "spread": [
+        {"region": "Korea", "lat": 37.5, "lng": 127.0, "date": 400},
+        {"region": "Japan", "lat": 35.0, "lng": 136.0, "date": 610},
+        {"region": "Central Asia (Samarkand)", "lat": 39.65, "lng": 66.96, "date": 751},
+        {"region": "Baghdad", "lat": 33.3, "lng": 44.4, "date": 793},
+        {"region": "Egypt", "lat": 30.0, "lng": 31.2, "date": 900},
+        {"region": "Spain", "lat": 40.0, "lng": -4.0, "date": 1056},
+        {"region": "Italy", "lat": 43.8, "lng": 11.2, "date": 1276}
+      ],
+      "description": "Flexible writing surface made from plant fibers.",
+      "impact": "Cheaper, more portable than bamboo/papyrus/parchment. Enabled bureaucracy and printing.",
+      "sources": ["Tsien, Tsuen-Hsuin. Paper and Printing (1985)"]
+    },
+    {
+      "id": "compass",
+      "name": "Magnetic Compass",
+      "category": "navigation",
+      "origin": {"region": "China", "lat": 34.0, "lng": 113.0, "date": -200},
+      "requires": ["iron-smelting"],
+      "enables": ["ocean-navigation", "age-of-exploration"],
+      "spread": [
+        {"region": "China (navigation use)", "lat": 30.0, "lng": 120.0, "date": 1040},
+        {"region": "Islamic World", "lat": 33.0, "lng": 44.0, "date": 1232},
+        {"region": "Europe", "lat": 43.3, "lng": 5.4, "date": 1190}
+      ],
+      "description": "Device using Earth's magnetic field to find direction.",
+      "impact": "Enabled reliable navigation out of sight of land, opened ocean routes",
+      "sources": ["Needham, Joseph. Science and Civilisation in China, Vol. 4 (1962)"]
+    },
+    {
+      "id": "gunpowder",
+      "name": "Gunpowder",
+      "category": "military",
+      "origin": {"region": "China", "lat": 34.0, "lng": 113.0, "date": 850},
+      "requires": ["alchemy-chemistry"],
+      "enables": ["firearms", "cannons", "rockets", "mining-explosives"],
+      "spread": [
+        {"region": "China (military use)", "lat": 34.0, "lng": 113.0, "date": 904},
+        {"region": "Islamic World", "lat": 33.0, "lng": 44.0, "date": 1240},
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": 1280}
+      ],
+      "description": "Explosive mixture of saltpeter, sulfur, and charcoal.",
+      "impact": "Ended age of castles and armored knights, revolutionized warfare",
+      "sources": ["Needham, Joseph. Science and Civilisation in China, Vol. 5 (1986)", "Chase, Kenneth. Firearms: A Global History (2003)"]
+    },
+    {
+      "id": "printing-movable-type",
+      "name": "Printing (Movable Type)",
+      "category": "communication",
+      "origin": {"region": "China", "lat": 35.0, "lng": 117.0, "date": 1040},
+      "requires": ["paper", "metallurgy-crucibles"],
+      "enables": ["mass-literacy", "scientific-revolution", "reformation", "newspapers"],
+      "independent_inventions": [
+        {"region": "China", "lat": 35.0, "lng": 117.0, "date": 1040, "inventor": "Bi Sheng", "material": "ceramic"},
+        {"region": "Korea", "lat": 37.5, "lng": 127.0, "date": 1234, "inventor": "Choe Yun-ui", "material": "metal"},
+        {"region": "Germany", "lat": 50.0, "lng": 8.27, "date": 1440, "inventor": "Johannes Gutenberg", "material": "metal"}
+      ],
+      "spread": [
+        {"region": "Italy", "lat": 45.4, "lng": 12.3, "date": 1465},
+        {"region": "France", "lat": 48.9, "lng": 2.3, "date": 1470},
+        {"region": "England", "lat": 51.5, "lng": -0.1, "date": 1476},
+        {"region": "Spain", "lat": 40.4, "lng": -3.7, "date": 1472}
+      ],
+      "description": "Reusable arranged type for mass reproduction of text.",
+      "impact": "Books became 80% cheaper in 50 years. Enabled Reformation, Scientific Revolution.",
+      "sources": ["Eisenstein, Elizabeth. The Printing Revolution (1983)"]
+    },
+    {
+      "id": "blast-furnace",
+      "name": "Blast Furnace",
+      "category": "metallurgy",
+      "origin": {"region": "China", "lat": 34.0, "lng": 113.0, "date": -500},
+      "requires": ["iron-smelting"],
+      "enables": ["cast-iron", "steel-mass-production"],
+      "spread": [
+        {"region": "Europe (Wallonia)", "lat": 50.5, "lng": 5.5, "date": 1150}
+      ],
+      "description": "High-temperature furnace for continuous iron production.",
+      "impact": "Enabled cast iron, dramatically increased iron production",
+      "sources": ["Wagner, Donald. Iron and Steel in Ancient China (1993)"]
+    },
+    {
+      "id": "steel",
+      "name": "Steel (Crucible)",
+      "category": "metallurgy",
+      "origin": {"region": "India", "lat": 17.4, "lng": 78.5, "date": -400},
+      "requires": ["iron-smelting", "blast-furnace"],
+      "enables": ["superior-weapons", "precision-tools", "industrial-machinery"],
+      "spread": [
+        {"region": "Central Asia (Damascus)", "lat": 33.5, "lng": 36.3, "date": 300},
+        {"region": "Japan (Tamahagane)", "lat": 35.0, "lng": 132.0, "date": 700},
+        {"region": "Europe", "lat": 53.4, "lng": -1.5, "date": 1740}
+      ],
+      "description": "Iron alloyed with controlled carbon for hardness and flexibility.",
+      "impact": "Superior swords (wootz, Damascus), later enabled industrial revolution",
+      "sources": ["Craddock, Paul. Early Metal Mining and Production (1995)"]
+    },
+    {
+      "id": "lateen-sail",
+      "name": "Lateen Sail",
+      "category": "navigation",
+      "origin": {"region": "Mediterranean/Indian Ocean", "lat": 15.0, "lng": 55.0, "date": 200},
+      "requires": ["boats", "textile-weaving"],
+      "enables": ["sailing-against-wind", "ocean-voyages"],
+      "spread": [
+        {"region": "Arabia", "lat": 24.0, "lng": 45.0, "date": 200},
+        {"region": "Mediterranean", "lat": 35.0, "lng": 18.0, "date": 600},
+        {"region": "Iberia", "lat": 39.0, "lng": -8.0, "date": 1000}
+      ],
+      "description": "Triangular sail allowing sailing closer to the wind.",
+      "impact": "Enabled ships to sail against prevailing winds, crucial for exploration",
+      "sources": ["Hourani, George. Arab Seafaring (1951)"]
+    },
+    {
+      "id": "astrolabe",
+      "name": "Astrolabe",
+      "category": "navigation",
+      "origin": {"region": "Greece", "lat": 38.0, "lng": 24.0, "date": -150},
+      "requires": ["astronomy", "metallurgy-crucibles"],
+      "enables": ["celestial-navigation", "latitude-determination"],
+      "spread": [
+        {"region": "Islamic World", "lat": 33.0, "lng": 44.0, "date": 800},
+        {"region": "Spain", "lat": 40.4, "lng": -3.7, "date": 1000},
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": 1200}
+      ],
+      "description": "Instrument for measuring celestial positions.",
+      "impact": "Enabled navigation by stars, determining latitude at sea",
+      "sources": ["Morrison, James. The Astrolabe (2007)"]
+    },
+    {
+      "id": "telescope",
+      "name": "Telescope",
+      "category": "science",
+      "origin": {"region": "Netherlands", "lat": 51.9, "lng": 4.5, "date": 1608},
+      "requires": ["glassmaking", "lens-grinding"],
+      "enables": ["modern-astronomy", "microscope-improvements", "surveying"],
+      "spread": [
+        {"region": "Italy (Galileo)", "lat": 43.8, "lng": 11.2, "date": 1609},
+        {"region": "England", "lat": 51.5, "lng": -0.1, "date": 1610},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1620}
+      ],
+      "description": "Optical instrument for viewing distant objects.",
+      "impact": "Proved heliocentric model, revealed moons of Jupiter, transformed astronomy",
+      "sources": ["Van Helden, Albert. The Invention of the Telescope (1977)"]
+    },
+    {
+      "id": "steam-engine",
+      "name": "Steam Engine",
+      "category": "power",
+      "origin": {"region": "England", "lat": 52.5, "lng": -1.9, "date": 1712},
+      "requires": ["iron-smelting", "precision-tools", "coal-mining"],
+      "enables": ["industrial-revolution", "railways", "steamships", "factories"],
+      "spread": [
+        {"region": "England (Watt improvement)", "lat": 55.9, "lng": -3.2, "date": 1769},
+        {"region": "France", "lat": 48.9, "lng": 2.3, "date": 1780},
+        {"region": "USA", "lat": 40.7, "lng": -74.0, "date": 1785},
+        {"region": "Germany", "lat": 52.5, "lng": 13.4, "date": 1790}
+      ],
+      "description": "Engine converting heat to mechanical work via steam pressure.",
+      "impact": "Launched Industrial Revolution. Freed humanity from muscle power.",
+      "sources": ["Rolt, L.T.C. & Allen, J.S. The Steam Engine of Thomas Newcomen (1977)"]
+    },
+    {
+      "id": "vaccination",
+      "name": "Vaccination",
+      "category": "medicine",
+      "origin": {"region": "England", "lat": 51.7, "lng": -2.2, "date": 1796},
+      "requires": ["scientific-method", "medicine-practice"],
+      "enables": ["disease-eradication", "public-health", "germ-theory"],
+      "spread": [
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": 1800},
+        {"region": "Americas", "lat": 40.0, "lng": -75.0, "date": 1800},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1820}
+      ],
+      "description": "Inducing immunity through weakened or dead pathogens.",
+      "impact": "Smallpox eradicated. Billions of lives saved.",
+      "sources": ["Riedel, Stefan. Edward Jenner and the History of Smallpox and Vaccination (2005)"]
+    },
+    {
+      "id": "electricity",
+      "name": "Electricity (Practical)",
+      "category": "power",
+      "origin": {"region": "England/USA", "lat": 51.5, "lng": -0.1, "date": 1831},
+      "requires": ["scientific-method", "metallurgy-crucibles"],
+      "enables": ["electric-motor", "telegraph", "electric-light", "electronics"],
+      "spread": [
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": 1850},
+        {"region": "USA", "lat": 40.7, "lng": -74.0, "date": 1850},
+        {"region": "Global electrification", "lat": 0, "lng": 0, "date": 1900}
+      ],
+      "description": "Harnessing and distributing electrical power.",
+      "impact": "Second Industrial Revolution. Transformed every aspect of modern life.",
+      "sources": ["Hughes, Thomas. Networks of Power (1983)"]
+    },
+    {
+      "id": "telegraph",
+      "name": "Electric Telegraph",
+      "category": "communication",
+      "origin": {"region": "England/USA", "lat": 40.7, "lng": -74.0, "date": 1837},
+      "requires": ["electricity"],
+      "enables": ["telephone", "global-communication", "stock-tickers"],
+      "spread": [
+        {"region": "USA (cross-continent)", "lat": 40.0, "lng": -100.0, "date": 1861},
+        {"region": "Transatlantic cable", "lat": 45.0, "lng": -40.0, "date": 1866},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1880}
+      ],
+      "description": "Near-instant long-distance communication via electrical signals.",
+      "impact": "First time information traveled faster than physical transport. Transformed business, news, warfare.",
+      "sources": ["Standage, Tom. The Victorian Internet (1998)"]
+    },
+    {
+      "id": "internal-combustion",
+      "name": "Internal Combustion Engine",
+      "category": "power",
+      "origin": {"region": "Germany", "lat": 49.0, "lng": 8.4, "date": 1876},
+      "requires": ["precision-tools", "petroleum-refining", "metallurgy-crucibles"],
+      "enables": ["automobiles", "airplanes", "tractors", "mobile-power"],
+      "spread": [
+        {"region": "Europe", "lat": 48.0, "lng": 10.0, "date": 1890},
+        {"region": "USA (Ford)", "lat": 42.3, "lng": -83.0, "date": 1908},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1920}
+      ],
+      "description": "Engine burning fuel inside cylinders for power.",
+      "impact": "Enabled automobiles and flight. Transformed transportation and warfare.",
+      "sources": ["Lyle Cummins, C. Internal Fire (1976)"]
+    },
+    {
+      "id": "radio",
+      "name": "Radio",
+      "category": "communication",
+      "origin": {"region": "Italy/International", "lat": 44.5, "lng": 11.3, "date": 1895},
+      "requires": ["electricity", "telegraph"],
+      "enables": ["broadcast-media", "radar", "television", "wireless-communication"],
+      "spread": [
+        {"region": "Transatlantic", "lat": 45.0, "lng": -40.0, "date": 1901},
+        {"region": "Broadcasting (USA)", "lat": 40.0, "lng": -75.0, "date": 1920},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1930}
+      ],
+      "description": "Wireless transmission of information via electromagnetic waves.",
+      "impact": "First broadcast medium. Transformed news, entertainment, warfare.",
+      "sources": ["Douglas, Susan. Inventing American Broadcasting (1987)"]
+    },
+    {
+      "id": "antibiotics",
+      "name": "Antibiotics",
+      "category": "medicine",
+      "origin": {"region": "England", "lat": 51.5, "lng": -0.1, "date": 1928},
+      "requires": ["germ-theory", "chemistry"],
+      "enables": ["modern-surgery", "disease-treatment", "longer-lifespan"],
+      "spread": [
+        {"region": "Mass production", "lat": 40.7, "lng": -74.0, "date": 1943},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1950}
+      ],
+      "description": "Chemicals that kill bacteria without harming host.",
+      "impact": "Made previously fatal infections curable. Enabled modern surgery.",
+      "sources": ["Gaynes, Robert. The Discovery of Penicillin (2017)"]
+    },
+    {
+      "id": "transistor",
+      "name": "Transistor",
+      "category": "electronics",
+      "origin": {"region": "USA", "lat": 40.5, "lng": -74.4, "date": 1947},
+      "requires": ["electricity", "quantum-physics", "materials-science"],
+      "enables": ["computers", "integrated-circuits", "digital-revolution"],
+      "spread": [
+        {"region": "USA (commercial)", "lat": 40.0, "lng": -75.0, "date": 1954},
+        {"region": "Japan", "lat": 35.7, "lng": 139.7, "date": 1955},
+        {"region": "Global", "lat": 0, "lng": 0, "date": 1960}
+      ],
+      "description": "Semiconductor device for switching/amplifying electronic signals.",
+      "impact": "Foundation of all modern electronics. Enabled computer revolution.",
+      "sources": ["Riordan, Michael. Crystal Fire (1997)"]
+    },
+    {
+      "id": "internet",
+      "name": "Internet",
+      "category": "communication",
+      "origin": {"region": "USA", "lat": 34.0, "lng": -118.2, "date": 1969},
+      "requires": ["transistor", "computers", "telecommunications"],
+      "enables": ["world-wide-web", "digital-economy", "social-media", "ai"],
+      "spread": [
+        {"region": "ARPANET (USA)", "lat": 37.5, "lng": -122.0, "date": 1969},
+        {"region": "Europe (CERN)", "lat": 46.2, "lng": 6.0, "date": 1989},
+        {"region": "World Wide Web", "lat": 46.2, "lng": 6.0, "date": 1991},
+        {"region": "Global mass adoption", "lat": 0, "lng": 0, "date": 2000}
+      ],
+      "description": "Global network of interconnected computer networks.",
+      "impact": "Most transformative communication technology since printing. Reshaped society.",
+      "sources": ["Abbate, Janet. Inventing the Internet (1999)"]
+    }
+  ]
+}
