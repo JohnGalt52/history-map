@@ -791,6 +791,9 @@
                 .replace(/^## (.*?)$/gm, '<div class="history-section">$1</div>')
                 // Make bold text clickable
                 .replace(/\*\*(.*?)\*\*/g, '<a href="#" class="history-link" data-query="$1">$1</a>')
+                // Wiki-style links [[Article|Display]] or [[Simple]]
+                .replace(/\[\[([^\|\]]+)\|([^\]]+)\]\]/g, '<a href="#" class="history-link" data-query="$1">$2</a>')
+                .replace(/\[\[([^\]]+)\]\]/g, '<a href="#" class="history-link" data-query="$1">$1</a>')
                 // Bullets  
                 .replace(/^[\*\-•] /gm, '• ')
                 // Line breaks
