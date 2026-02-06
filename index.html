@@ -536,7 +536,11 @@
                     
                     layer.bindTooltip(name, { sticky: true });
                     
-                    layer.on('click', () => queryLocalHistory(layer.getBounds().getCenter(), name));
+                    layer.on('click', () => {
+                        const center = layer.getBounds().getCenter();
+                        const displayName = name === 'Unknown' ? `Region at ${center.lat.toFixed(2)}°, ${center.lng.toFixed(2)}°` : name;
+                        queryLocalHistory(center, displayName);
+                    });
                     layer.on('mouseover', function() { 
                         this.setStyle({ fillOpacity: 0.8, weight: 2, color: '#fff' }); 
                     });
@@ -614,7 +618,11 @@
         }
         
         async function queryHistory(placeName, year) {
-            const response = await fetch(`/api/history?place=${encodeURIComponent(placeName)}&year=${year}`);
+            // Add context for coordinate-based queries
+            const enhancedPlace = placeName.startsWith('Region at') 
+                ? placeName + ' (identify this location and describe its history)'
+                : placeName;
+            const response = await fetch(`/api/history?place=${encodeURIComponent(enhancedPlace)}&year=${year}`);
             
             if (!response.ok) {
                 const err = await response.json().catch(() => ({}));
