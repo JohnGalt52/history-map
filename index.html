@@ -46,8 +46,8 @@
             gap: 16px;
         }
         
-        .year-editable { cursor: pointer; }
-        .year-editable:hover { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 2px 8px; margin: -2px -8px; }
+        .year-edit-btn { background: rgba(255,255,255,0.15); border: none; border-radius: 6px; padding: 4px 8px; margin-left: 10px; cursor: pointer; font-size: 14px; }
+        .year-edit-btn:hover { background: rgba(255,255,255,0.25); }
         .year-input { display: none; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: #fff; font-size: 18px; font-weight: 600; width: 120px; padding: 4px 8px; text-align: center; }
         .year-input:focus { outline: none; border-color: #007AFF; }
         .year-pill.editing #yearText { display: none; }
@@ -389,8 +389,9 @@
     
     <!-- Year Display -->
     <div class="year-pill">
-        <span id="yearText" class="year-editable" title="Click to enter year" onclick="startYearEdit()">1000 AD</span>
-        <input type="text" id="yearInput" class="year-input" placeholder="e.g. 1492 or 500 BC">
+        <span id="yearText">1000 AD</span>
+        <button class="year-edit-btn" onclick="startYearEdit()" title="Jump to year">✏️</button>
+        <input type="text" id="yearInput" class="year-input" placeholder="e.g. 1492">
         <span class="region-count"><span id="regionCount">0</span> territories</span>
     </div>
     
