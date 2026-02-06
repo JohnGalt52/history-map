@@ -67,6 +67,7 @@
         }
         
         .layer-btn {
+            position: relative;
             width: 50px;
             height: 50px;
             border-radius: 14px;
@@ -91,6 +92,22 @@
         .layer-btn.active {
             background: rgba(0, 122, 255, 0.9);
             border-color: rgba(0, 122, 255, 0.5);
+        }
+        
+        .layer-btn[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1001;
+            pointer-events: none;
         }
         
         /* Timeline - Bottom */
@@ -362,14 +379,14 @@
     
     <!-- Layer Toggles -->
     <div class="layer-panel">
-        <button class="layer-btn" data-layer="trade" title="Trade Routes">🛤️</button>
-        <button class="layer-btn" data-layer="tech" title="Technology">💡</button>
-        <button class="layer-btn" data-layer="pop" title="Population">👥</button>
-        <button class="layer-btn" data-layer="climate" title="Climate">🌡️</button>
-        <button class="layer-btn" data-layer="wonders" title="Wonders">🏛️</button>
-        <button class="layer-btn" data-layer="wars" title="Wars">⚔️</button>
-        <button class="layer-btn" data-layer="religions" title="Religions">🕊️</button>
-        <button class="layer-btn" data-layer="plagues" title="Plagues">☠️</button>
+        <button class="layer-btn" data-layer="trade" title="Trade Routes - Ancient commerce paths">🛤️</button>
+        <button class="layer-btn" data-layer="tech" title="Technology - Inventions & spread">💡</button>
+        <button class="layer-btn" data-layer="pop" title="Population - Demographics over time">👥</button>
+        <button class="layer-btn" data-layer="climate" title="Climate - Weather events & changes">🌡️</button>
+        <button class="layer-btn" data-layer="wonders" title="Wonders - Ancient & modern marvels">🏛️</button>
+        <button class="layer-btn" data-layer="wars" title="Wars - Major conflicts & battles">⚔️</button>
+        <button class="layer-btn" data-layer="religions" title="Religions - Faith origins & spread">🕊️</button>
+        <button class="layer-btn" data-layer="plagues" title="Plagues - Pandemics & epidemics">☠️</button>
     </div>
     
     <!-- Timeline -->
