@@ -768,11 +768,25 @@
             document.getElementById('infoSubtitle').textContent = availableYears[currentYearIndex].label;
             
             let html = data.result
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                // Headers
+                .replace(/^# (.*?)$/gm, '<div class="history-title">$1</div>')
+                .replace(/^## (.*?)$/gm, '<div class="history-section">$1</div>')
+                // Make bold text clickable
+                .replace(/\*\*(.*?)\*\*/g, '<a href="#" class="history-link" data-query="$1">$1</a>')
+                // Bullets  
                 .replace(/^[\*\-•] /gm, '• ')
+                // Line breaks
                 .replace(/\n/g, '<br>');
             
             document.getElementById('infoContent').innerHTML = html;
+            
+            // Add click handlers
+            document.querySelectorAll('.history-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    queryLocalHistory({ lat: 0, lng: 0 }, link.dataset.query);
+                });
+            });
         }
         
         function closeInfoPanel() {
