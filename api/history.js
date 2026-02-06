@@ -47,9 +47,10 @@ Include (if relevant):
 • Political control (empire, kingdom)
 • Notable events or conflicts
 • Economic activities
-• Notable historical figures
 
-Keep response under 200 words. Use bullet points for clarity.`;
+Format notable people, events, and places as [[Name]] so they become clickable links. For example: "[[Julius Caesar]] conquered this region" or "The [[Silk Road]] passed through here."
+
+Keep response under 200 words. Use bullet points.`;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
