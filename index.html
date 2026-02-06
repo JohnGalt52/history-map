@@ -46,6 +46,12 @@
             gap: 16px;
         }
         
+        .year-editable { cursor: pointer; }
+        .year-editable:hover { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 2px 8px; margin: -2px -8px; }
+        .year-input { display: none; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: #fff; font-size: 18px; font-weight: 600; width: 120px; padding: 4px 8px; text-align: center; }
+        .year-input:focus { outline: none; border-color: #007AFF; }
+        .year-pill.editing #yearText { display: none; }
+        .year-pill.editing .year-input { display: inline-block; }
         .year-pill .region-count {
             font-size: 13px;
             font-weight: 400;
@@ -383,7 +389,8 @@
     
     <!-- Year Display -->
     <div class="year-pill">
-        <span id="yearText">1000 AD</span>
+        <span id="yearText" class="year-editable" title="Click to enter year">1000 AD</span>
+        <input type="text" id="yearInput" class="year-input" placeholder="e.g. 1492 or 500 BC">
         <span class="region-count"><span id="regionCount">0</span> territories</span>
     </div>
     
@@ -795,6 +802,55 @@
         }
         
         function setupControls() {
+            // Year editing
+            const yearText = document.getElementById('yearText');
+            const yearInput = document.getElementById('yearInput');
+            const yearPill = document.querySelector('.year-pill');
+            
+            yearText.addEventListener('click', () => {
+                yearPill.classList.add('editing');
+                yearInput.value = '';
+                yearInput.focus();
+            });
+            
+            yearInput.addEventListener('blur', () => {
+                yearPill.classList.remove('editing');
+            });
+            
+            yearInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const input = yearInput.value.trim().toUpperCase();
+                    let targetYear;
+                    
+                    // Parse input like "1492", "500 BC", "100 AD", "-500"
+                    if (input.includes('BC') || input.includes('BCE')) {
+                        targetYear = -Math.abs(parseInt(input));
+                    } else if (input.includes('AD') || input.includes('CE')) {
+                        targetYear = Math.abs(parseInt(input));
+                    } else {
+                        targetYear = parseInt(input);
+                    }
+                    
+                    if (!isNaN(targetYear)) {
+                        // Find closest available year
+                        let closest = 0;
+                        let minDiff = Infinity;
+                        availableYears.forEach((y, i) => {
+                            const diff = Math.abs(y.year - targetYear);
+                            if (diff < minDiff) {
+                                minDiff = diff;
+                                closest = i;
+                            }
+                        });
+                        loadYear(closest);
+                    }
+                    
+                    yearPill.classList.remove('editing');
+                } else if (e.key === 'Escape') {
+                    yearPill.classList.remove('editing');
+                }
+            });
+            
             // Timeline
             document.getElementById('timeline').addEventListener('input', e => {
                 const index = Math.round((e.target.value / 100) * (availableYears.length - 1));
