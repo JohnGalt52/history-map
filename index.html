@@ -334,6 +334,11 @@
         }
         
         /* Tooltips */
+        .wonder-marker, .war-marker {
+            font-size: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
         .leaflet-tooltip {
             background: rgba(0,0,0,0.85);
             border: none;
@@ -466,6 +471,19 @@
         let localHistoryCache = new Map();
         let lastQueryTime = 0;
         
+        // Layer data and visibility
+        let tradeRoutesData = [];
+        let wondersData = [];
+        let warsData = [];
+        let tradeRoutesLayer = null;
+        let wondersLayer = null;
+        let warsLayer = null;
+        let layerVisibility = {
+            trade: false,
+            wonders: false,
+            wars: false
+        };
+        
         // Colors
         const colors = [
             '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
@@ -493,6 +511,9 @@
             // Add zoom control to bottom right
             L.control.zoom({ position: 'bottomright' }).addTo(map);
             
+            // Load layer data
+            await loadLayerData();
+            
             // Load initial year
             await loadYear(currentYearIndex);
             
@@ -501,6 +522,92 @@
             
             // Hide loading
             document.getElementById('loading').classList.add('hidden');
+        }
+        
+        async function loadLayerData() {
+            try {
+                // Trade routes
+                const tradeRes = await fetch('data/trade-routes.geojson');
+                const tradeGeo = await tradeRes.json();
+                tradeRoutesData = tradeGeo.features || [];
+                
+                // Wonders
+                const wondersRes = await fetch('data/wonders.json');
+                wondersData = await wondersRes.json();
+                
+                // Wars
+                const warsRes = await fetch('data/wars.json');
+                warsData = await warsRes.json();
+                
+                console.log('Layer data loaded');
+            } catch (e) {
+                console.log('Some layer data not loaded:', e);
+            }
+        }
+        
+        function updateLayers(year) {
+            // Trade routes
+            if (tradeRoutesLayer) map.removeLayer(tradeRoutesLayer);
+            if (layerVisibility.trade && tradeRoutesData.length) {
+                const activeRoutes = tradeRoutesData.filter(r => {
+                    const props = r.properties || {};
+                    return year >= (props.startYear || -10000) && year <= (props.endYear || 3000);
+                });
+                
+                tradeRoutesLayer = L.geoJSON({ type: 'FeatureCollection', features: activeRoutes }, {
+                    style: f => ({
+                        color: f.properties?.type === 'silk' ? '#FFD700' : 
+                               f.properties?.type === 'maritime' ? '#4ECDC4' : '#FF6B6B',
+                        weight: 3,
+                        opacity: 0.8
+                    }),
+                    onEachFeature: (f, layer) => {
+                        layer.bindTooltip(f.properties?.name || 'Trade Route');
+                    }
+                }).addTo(map);
+            }
+            
+            // Wonders
+            if (wondersLayer) map.removeLayer(wondersLayer);
+            if (layerVisibility.wonders && wondersData.length) {
+                wondersLayer = L.layerGroup();
+                wondersData.forEach(w => {
+                    if (w.lat && w.lng && year >= (w.builtYear || -10000) && year <= (w.destroyedYear || 3000)) {
+                        L.marker([w.lat, w.lng], {
+                            icon: L.divIcon({
+                                className: 'wonder-marker',
+                                html: '🏛️',
+                                iconSize: [24, 24],
+                                iconAnchor: [12, 12]
+                            })
+                        }).bindTooltip(w.name).addTo(wondersLayer);
+                    }
+                });
+                wondersLayer.addTo(map);
+            }
+            
+            // Wars
+            if (warsLayer) map.removeLayer(warsLayer);
+            if (layerVisibility.wars && warsData.length) {
+                warsLayer = L.layerGroup();
+                warsData.forEach(w => {
+                    if (year >= w.startYear && year <= w.endYear && w.battles) {
+                        w.battles.forEach(b => {
+                            if (b.lat && b.lng) {
+                                L.marker([b.lat, b.lng], {
+                                    icon: L.divIcon({
+                                        className: 'war-marker',
+                                        html: '⚔️',
+                                        iconSize: [20, 20],
+                                        iconAnchor: [10, 10]
+                                    })
+                                }).bindTooltip(`${b.name} (${w.name})`).addTo(warsLayer);
+                            }
+                        });
+                    }
+                });
+                warsLayer.addTo(map);
+            }
         }
         
         async function loadYear(index) {
@@ -569,6 +676,9 @@
             
             // Add labels
             addLabels(data);
+            
+            // Update overlay layers
+            updateLayers(year);
         }
         
         function addLabels(data) {
@@ -677,11 +787,16 @@
             document.getElementById('nextBtn').addEventListener('click', () => loadYear(Math.min(availableYears.length - 1, currentYearIndex + 1)));
             document.getElementById('playBtn').addEventListener('click', togglePlay);
             
-            // Layer buttons (placeholder - can wire up later)
+            // Layer buttons
             document.querySelectorAll('.layer-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
+                    const layer = btn.dataset.layer;
                     btn.classList.toggle('active');
-                    // TODO: Toggle actual layer visibility
+                    
+                    if (layer === 'trade' || layer === 'wonders' || layer === 'wars') {
+                        layerVisibility[layer] = !layerVisibility[layer];
+                        updateLayers(availableYears[currentYearIndex].year);
+                    }
                 });
             });
             
