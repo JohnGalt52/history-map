@@ -389,7 +389,7 @@
     
     <!-- Year Display -->
     <div class="year-pill">
-        <span id="yearText" class="year-editable" title="Click to enter year">1000 AD</span>
+        <span id="yearText" class="year-editable" title="Click to enter year" onclick="startYearEdit()">1000 AD</span>
         <input type="text" id="yearInput" class="year-input" placeholder="e.g. 1492 or 500 BC">
         <span class="region-count"><span id="regionCount">0</span> territories</span>
     </div>
@@ -502,6 +502,15 @@
             '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
             '#F8B500', '#00CED1', '#FF69B4', '#32CD32', '#FFD700'
         ];
+        
+        // Year editing function
+        function startYearEdit() {
+            const yearPill = document.querySelector('.year-pill');
+            const yearInput = document.getElementById('yearInput');
+            yearPill.classList.add('editing');
+            yearInput.value = '';
+            setTimeout(() => yearInput.focus(), 50);
+        }
         
         // Initialize
         async function init() {
