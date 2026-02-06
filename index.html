@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>History Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            overflow: hidden;
+        }
+        
+        #map { 
+            width: 100vw; 
+            height: 100vh;
+        }
+        
+        /* Dark map tiles override */
+        .leaflet-tile-pane {
+            filter: brightness(0.9);
+        }
+        
+        /* Year Pill - Top Center */
+        .year-pill {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(28, 28, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 12px 32px;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 600;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .year-pill .region-count {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+            padding-left: 16px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Layer Panel - Left Side */
+        .layer-panel {
+            position: fixed;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+        }
+        
+        .layer-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(28, 28, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .layer-btn:hover {
+            background: rgba(58, 58, 60, 0.95);
+            transform: scale(1.05);
+        }
+        
+        .layer-btn.active {
+            background: rgba(0, 122, 255, 0.9);
+            border-color: rgba(0, 122, 255, 0.5);
+        }
+        
+        /* Timeline - Bottom */
+        .timeline-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            background: rgba(28, 28, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .timeline-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.2);
+            outline: none;
+        }
+        
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: transform 0.15s ease;
+        }
+        
+        .timeline-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+        
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            font-weight: 500;
+        }
+        
+        .playback-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .play-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .play-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .play-btn.active {
+            background: #007AFF;
+        }
+        
+        /* Info Panel - Right Side */
+        .info-panel {
+            position: fixed;
+            right: 16px;
+            top: 80px;
+            width: 340px;
+            max-height: calc(100vh - 200px);
+            background: rgba(28, 28, 30, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .info-panel.visible {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .info-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-header-icon { font-size: 24px; }
+        .info-header-title { flex: 1; font-weight: 600; font-size: 17px; color: #fff; }
+        
+        .info-close {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .info-close:hover { color: #fff; }
+        
+        .info-subtitle {
+            padding: 12px 20px;
+            background: rgba(0,0,0,0.3);
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .info-content {
+            padding: 20px;
+            max-height: 350px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .info-content strong { color: #fff; }
+        
+        .info-disclaimer {
+            padding: 12px 20px;
+            background: rgba(255, 204, 0, 0.15);
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .info-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #007AFF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-overlay .spinner {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: rgba(255,255,255,0.5);
+            font-size: 15px;
+        }
+        
+        /* Territory Labels */
+        .territory-label {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: rgba(255,255,255,0.85);
+            font-size: 11px;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.5);
+            white-space: nowrap;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        .territory-label.major {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        /* Tooltips */
+        .leaflet-tooltip {
+            background: rgba(0,0,0,0.85);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,0.85); }
+        
+        /* Hide Leaflet attribution on mobile */
+        @media (max-width: 600px) {
+            .leaflet-control-attribution { display: none; }
+            .layer-panel { left: 8px; }
+            .timeline-bar { width: 95%; padding: 16px 20px; }
+            .info-panel { width: calc(100% - 32px); right: 16px; }
+        }
+        
+        /* Custom scrollbar */
+        .info-content::-webkit-scrollbar { width: 6px; }
+        .info-content::-webkit-scrollbar-track { background: transparent; }
+        .info-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading historical data...</div>
+    </div>
+    
+    <!-- Map -->
+    <div id="map"></div>
+    
+    <!-- Year Display -->
+    <div class="year-pill">
+        <span id="yearText">1000 AD</span>
+        <span class="region-count"><span id="regionCount">0</span> territories</span>
+    </div>
+    
+    <!-- Layer Toggles -->
+    <div class="layer-panel">
+        <button class="layer-btn" data-layer="trade" title="Trade Routes">🛤️</button>
+        <button class="layer-btn" data-layer="tech" title="Technology">💡</button>
+        <button class="layer-btn" data-layer="pop" title="Population">👥</button>
+        <button class="layer-btn" data-layer="climate" title="Climate">🌡️</button>
+        <button class="layer-btn" data-layer="wonders" title="Wonders">🏛️</button>
+        <button class="layer-btn" data-layer="wars" title="Wars">⚔️</button>
+        <button class="layer-btn" data-layer="religions" title="Religions">🕊️</button>
+        <button class="layer-btn" data-layer="plagues" title="Plagues">☠️</button>
+    </div>
+    
+    <!-- Timeline -->
+    <div class="timeline-bar">
+        <input type="range" class="timeline-slider" id="timeline" min="0" max="100" value="50">
+        <div class="timeline-labels">
+            <span>10,000 BC</span>
+            <span>1 AD</span>
+            <span>1000</span>
+            <span>2010</span>
+        </div>
+        <div class="playback-controls">
+            <button class="play-btn" id="prevBtn">⏮</button>
+            <button class="play-btn" id="playBtn">▶️</button>
+            <button class="play-btn" id="nextBtn">⏭</button>
+        </div>
+    </div>
+    
+    <!-- Info Panel -->
+    <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+            <span class="info-header-icon">🔍</span>
+            <span class="info-header-title" id="infoTitle">Local History</span>
+            <button class="info-close" onclick="closeInfoPanel()">×</button>
+        </div>
+        <div class="info-subtitle" id="infoSubtitle">Loading...</div>
+        <div class="info-content" id="infoContent"></div>
+        <div class="info-disclaimer">⚠️ AI-generated historical context. Verify important facts.</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Config - API calls proxied through serverless function
+        const API_BASE = window.location.hostname === 'localhost' ? '' : '';
+        
+        // Time periods
+        const availableYears = [
+            { year: -10000, file: 'world_bc10000.geojson', label: '10,000 BC' },
+            { year: -5000, file: 'world_bc5000.geojson', label: '5,000 BC' },
+            { year: -3000, file: 'world_bc3000.geojson', label: '3,000 BC' },
+            { year: -2000, file: 'world_bc2000.geojson', label: '2,000 BC' },
+            { year: -1500, file: 'world_bc1500.geojson', label: '1,500 BC' },
+            { year: -1000, file: 'world_bc1000.geojson', label: '1,000 BC' },
+            { year: -500, file: 'world_bc500.geojson', label: '500 BC' },
+            { year: -323, file: 'world_bc323.geojson', label: '323 BC' },
+            { year: -200, file: 'world_bc200.geojson', label: '200 BC' },
+            { year: -1, file: 'world_bc1.geojson', label: '1 BC' },
+            { year: 100, file: 'world_100.geojson', label: '100 AD' },
+            { year: 200, file: 'world_200.geojson', label: '200 AD' },
+            { year: 400, file: 'world_400.geojson', label: '400 AD' },
+            { year: 600, file: 'world_600.geojson', label: '600 AD' },
+            { year: 800, file: 'world_800.geojson', label: '800 AD' },
+            { year: 1000, file: 'world_1000.geojson', label: '1000 AD' },
+            { year: 1200, file: 'world_1200.geojson', label: '1200 AD' },
+            { year: 1279, file: 'world_1279.geojson', label: '1279 AD' },
+            { year: 1400, file: 'world_1400.geojson', label: '1400 AD' },
+            { year: 1492, file: 'world_1492.geojson', label: '1492 AD' },
+            { year: 1600, file: 'world_1600.geojson', label: '1600 AD' },
+            { year: 1700, file: 'world_1700.geojson', label: '1700 AD' },
+            { year: 1783, file: 'world_1783.geojson', label: '1783 AD' },
+            { year: 1815, file: 'world_1815.geojson', label: '1815 AD' },
+            { year: 1880, file: 'world_1880.geojson', label: '1880 AD' },
+            { year: 1914, file: 'world_1914.geojson', label: '1914 AD' },
+            { year: 1938, file: 'world_1938.geojson', label: '1938 AD' },
+            { year: 1945, file: 'world_1945.geojson', label: '1945 AD' },
+            { year: 1960, file: 'world_1960.geojson', label: '1960 AD' },
+            { year: 1994, file: 'world_1994.geojson', label: '1994 AD' },
+            { year: 2010, file: 'world_2010.geojson', label: '2010 AD' }
+        ];
+        
+        // State
+        let map, currentLayer, labelsLayer;
+        let currentYearIndex = 15;
+        let dataCache = {};
+        let isPlaying = false;
+        let playInterval = null;
+        let localHistoryCache = new Map();
+        let lastQueryTime = 0;
+        
+        // Colors
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+            '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+            '#F8B500', '#00CED1', '#FF69B4', '#32CD32', '#FFD700'
+        ];
+        
+        // Initialize
+        async function init() {
+            // Create map with dark theme
+            map = L.map('map', {
+                center: [30, 0],
+                zoom: 3,
+                minZoom: 2,
+                maxZoom: 18,
+                zoomControl: false,
+                attributionControl: true
+            });
+            
+            // Dark map tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap, © CARTO'
+            }).addTo(map);
+            
+            // Add zoom control to bottom right
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+            
+            // Load initial year
+            await loadYear(currentYearIndex);
+            
+            // Setup event handlers
+            setupControls();
+            
+            // Hide loading
+            document.getElementById('loading').classList.add('hidden');
+        }
+        
+        async function loadYear(index) {
+            if (index < 0 || index >= availableYears.length) return;
+            
+            currentYearIndex = index;
+            const yearData = availableYears[index];
+            
+            // Update UI
+            document.getElementById('yearText').textContent = yearData.label;
+            document.getElementById('timeline').value = (index / (availableYears.length - 1)) * 100;
+            
+            // Load data
+            if (!dataCache[yearData.file]) {
+                try {
+                    const response = await fetch(`data/geojson/${yearData.file}`);
+                    dataCache[yearData.file] = await response.json();
+                } catch (err) {
+                    console.error('Load error:', err);
+                    return;
+                }
+            }
+            
+            renderLayer(dataCache[yearData.file], yearData.year);
+        }
+        
+        function renderLayer(data, year) {
+            // Clear existing
+            if (currentLayer) map.removeLayer(currentLayer);
+            if (labelsLayer) map.removeLayer(labelsLayer);
+            
+            // Get unique entities for coloring
+            const entities = [...new Set(data.features.map(f => f.properties.SUBJECTO || f.properties.NAME))];
+            
+            document.getElementById('regionCount').textContent = data.features.length;
+            
+            // Create layer
+            currentLayer = L.geoJSON(data, {
+                style: feature => {
+                    const name = feature.properties.SUBJECTO || feature.properties.NAME;
+                    return {
+                        fillColor: colors[entities.indexOf(name) % colors.length],
+                        fillOpacity: 0.55,
+                        color: 'rgba(255,255,255,0.4)',
+                        weight: 1
+                    };
+                },
+                onEachFeature: (feature, layer) => {
+                    const name = feature.properties.SUBJECTO || feature.properties.NAME || 'Unknown';
+                    
+                    layer.bindTooltip(name, { sticky: true });
+                    
+                    layer.on('click', () => queryLocalHistory(layer.getBounds().getCenter(), name));
+                    layer.on('mouseover', function() { 
+                        this.setStyle({ fillOpacity: 0.8, weight: 2, color: '#fff' }); 
+                    });
+                    layer.on('mouseout', function() { 
+                        this.setStyle({ fillOpacity: 0.55, weight: 1, color: 'rgba(255,255,255,0.4)' }); 
+                    });
+                }
+            }).addTo(map);
+            
+            // Add labels
+            addLabels(data);
+        }
+        
+        function addLabels(data) {
+            labelsLayer = L.layerGroup();
+            const labeled = new Set();
+            
+            data.features.forEach(f => {
+                const name = f.properties.SUBJECTO || f.properties.NAME;
+                if (!name || labeled.has(name)) return;
+                
+                const bounds = L.geoJSON(f).getBounds();
+                const center = bounds.getCenter();
+                const area = (bounds.getNorth() - bounds.getSouth()) * (bounds.getEast() - bounds.getWest());
+                
+                if (area < 50) return;
+                
+                labeled.add(name);
+                const isMajor = area > 200;
+                
+                L.marker(center, {
+                    icon: L.divIcon({
+                        className: 'territory-label' + (isMajor ? ' major' : ''),
+                        html: name,
+                        iconSize: [150, 20],
+                        iconAnchor: [75, 10]
+                    }),
+                    interactive: false
+                }).addTo(labelsLayer);
+            });
+            
+            labelsLayer.addTo(map);
+        }
+        
+        // Local History with Gemini
+        async function queryLocalHistory(latlng, placeName) {
+            // Throttle
+            if (Date.now() - lastQueryTime < 2000) return;
+            lastQueryTime = Date.now();
+            
+            const year = availableYears[currentYearIndex].year;
+            const cacheKey = `${latlng.lat.toFixed(1)},${latlng.lng.toFixed(1)},${Math.round(year/50)*50}`;
+            
+            // Show panel
+            const panel = document.getElementById('infoPanel');
+            panel.classList.add('visible');
+            document.getElementById('infoTitle').textContent = placeName;
+            document.getElementById('infoSubtitle').textContent = `${availableYears[currentYearIndex].label} • Researching...`;
+            document.getElementById('infoContent').innerHTML = '<div class="info-loading"><div class="spinner"></div>Querying historical records...</div>';
+            
+            // Check cache
+            if (localHistoryCache.has(cacheKey)) {
+                displayHistory(localHistoryCache.get(cacheKey));
+                return;
+            }
+            
+            try {
+                const result = await queryHistory(placeName, year);
+                const data = { placeName, result, year };
+                localHistoryCache.set(cacheKey, data);
+                displayHistory(data);
+            } catch (err) {
+                document.getElementById('infoContent').innerHTML = `<div style="color:#ff6b6b;padding:20px;text-align:center;">${err.message}</div>`;
+            }
+        }
+        
+        async function queryHistory(placeName, year) {
+            const response = await fetch(`/api/history?place=${encodeURIComponent(placeName)}&year=${year}`);
+            
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.error || `Error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.result || 'No information available.';
+        }
+        
+        function displayHistory(data) {
+            document.getElementById('infoSubtitle').textContent = availableYears[currentYearIndex].label;
+            
+            let html = data.result
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^[\*\-•] /gm, '• ')
+                .replace(/\n/g, '<br>');
+            
+            document.getElementById('infoContent').innerHTML = html;
+        }
+        
+        function closeInfoPanel() {
+            document.getElementById('infoPanel').classList.remove('visible');
+        }
+        
+        function setupControls() {
+            // Timeline
+            document.getElementById('timeline').addEventListener('input', e => {
+                const index = Math.round((e.target.value / 100) * (availableYears.length - 1));
+                loadYear(index);
+            });
+            
+            // Playback
+            document.getElementById('prevBtn').addEventListener('click', () => loadYear(Math.max(0, currentYearIndex - 1)));
+            document.getElementById('nextBtn').addEventListener('click', () => loadYear(Math.min(availableYears.length - 1, currentYearIndex + 1)));
+            document.getElementById('playBtn').addEventListener('click', togglePlay);
+            
+            // Layer buttons (placeholder - can wire up later)
+            document.querySelectorAll('.layer-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.classList.toggle('active');
+                    // TODO: Toggle actual layer visibility
+                });
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', e => {
+                if (e.key === 'ArrowLeft') loadYear(Math.max(0, currentYearIndex - 1));
+                if (e.key === 'ArrowRight') loadYear(Math.min(availableYears.length - 1, currentYearIndex + 1));
+                if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+                if (e.key === 'Escape') closeInfoPanel();
+            });
+        }
+        
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                btn.textContent = '⏸️';
+                btn.classList.add('active');
+                playInterval = setInterval(() => {
+                    if (currentYearIndex >= availableYears.length - 1) {
+                        currentYearIndex = -1;
+                    }
+                    loadYear(currentYearIndex + 1);
+                }, 1500);
+            } else {
+                btn.textContent = '▶️';
+                btn.classList.remove('active');
+                clearInterval(playInterval);
+            }
+        }
+        
+        // Start
+        init();
+    </script>
+</body>
+</html>

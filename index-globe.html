@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Map - 3D Globe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        #globeContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Top Bar - Apple Maps Style */
+        .top-bar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+        }
+        
+        .year-pill {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 22px;
+            padding: 10px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .stats-pill {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Timeline - Bottom */
+        .timeline-container {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            z-index: 100;
+        }
+        
+        .timeline-bar {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 16px 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .timeline-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.2);
+            outline: none;
+            margin: 8px 0;
+        }
+        
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+        
+        .playback-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .playback-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .playback-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .playback-btn.active {
+            background: #007AFF;
+        }
+        
+        /* Layer Toggles - Left Side */
+        .layer-panel {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+        
+        .layer-btn {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .layer-btn:hover {
+            background: rgba(60, 60, 60, 0.9);
+            transform: scale(1.05);
+        }
+        
+        .layer-btn.active {
+            background: rgba(0, 122, 255, 0.8);
+            border-color: #007AFF;
+        }
+        
+        .layer-btn[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 60px;
+            background: rgba(0,0,0,0.9);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        /* Info Panel - Right Side */
+        .info-panel {
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            width: 320px;
+            max-height: calc(100vh - 200px);
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            display: none;
+            z-index: 100;
+        }
+        
+        .info-panel.visible {
+            display: block;
+        }
+        
+        .info-header {
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-header-icon {
+            font-size: 24px;
+        }
+        
+        .info-header-title {
+            flex: 1;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .info-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        
+        .info-close:hover {
+            opacity: 1;
+        }
+        
+        .info-subtitle {
+            padding: 10px 16px;
+            background: rgba(0,0,0,0.3);
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .info-content {
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .info-disclaimer {
+            padding: 10px 16px;
+            background: rgba(255, 193, 7, 0.2);
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #007AFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Territory tooltip */
+        .territory-tooltip {
+            background: rgba(0,0,0,0.9);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        /* Trade route legend */
+        .trade-legend {
+            position: fixed;
+            bottom: 140px;
+            left: 20px;
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+            z-index: 100;
+        }
+        
+        .trade-legend.visible {
+            display: block;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline-container {
+                width: 95%;
+                bottom: 20px;
+            }
+            
+            .info-panel {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+            
+            .layer-panel {
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading historical data...</div>
+    </div>
+    
+    <!-- Globe Container -->
+    <div id="globeContainer"></div>
+    
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="year-pill" id="yearDisplay">1000 AD</div>
+        <div class="stats-pill" id="regionCount">0 territories</div>
+    </div>
+    
+    <!-- Layer Toggles -->
+    <div class="layer-panel">
+        <button class="layer-btn active" data-layer="borders" data-tooltip="Borders">🗺️</button>
+        <button class="layer-btn" data-layer="trade" data-tooltip="Trade Routes">🛤️</button>
+        <button class="layer-btn" data-layer="tech" data-tooltip="Technology">💡</button>
+        <button class="layer-btn" data-layer="pop" data-tooltip="Population">👥</button>
+        <button class="layer-btn" data-layer="climate" data-tooltip="Climate">🌡️</button>
+        <button class="layer-btn" data-layer="wonders" data-tooltip="Wonders">🏛️</button>
+        <button class="layer-btn" data-layer="wars" data-tooltip="Wars">⚔️</button>
+        <button class="layer-btn" data-layer="religions" data-tooltip="Religions">🕊️</button>
+        <button class="layer-btn" data-layer="plagues" data-tooltip="Plagues">☠️</button>
+    </div>
+    
+    <!-- Trade Route Legend -->
+    <div class="trade-legend" id="tradeLegend">
+        <div class="legend-item"><span class="legend-color" style="background: #FFD700"></span> Silk Road</div>
+        <div class="legend-item"><span class="legend-color" style="background: #4ECDC4"></span> Maritime</div>
+        <div class="legend-item"><span class="legend-color" style="background: #FF6B6B"></span> Land Routes</div>
+    </div>
+    
+    <!-- Info Panel -->
+    <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+            <span class="info-header-icon">🔍</span>
+            <span class="info-header-title" id="infoPanelTitle">Local History</span>
+            <button class="info-close" onclick="closeInfoPanel()">×</button>
+        </div>
+        <div class="info-subtitle" id="infoPanelSubtitle">Loading...</div>
+        <div class="info-content" id="infoPanelContent"></div>
+        <div class="info-disclaimer">⚠️ AI-generated historical context. Verify important facts.</div>
+    </div>
+    
+    <!-- Timeline -->
+    <div class="timeline-container">
+        <div class="timeline-bar">
+            <input type="range" class="timeline-slider" id="timelineSlider" min="0" max="100" value="50">
+            <div class="timeline-labels">
+                <span>10,000 BC</span>
+                <span>5000 BC</span>
+                <span>1 AD</span>
+                <span>1000 AD</span>
+                <span>2010</span>
+            </div>
+            <div class="playback-controls">
+                <button class="playback-btn" id="prevBtn">⏮</button>
+                <button class="playback-btn" id="playBtn">▶️</button>
+                <button class="playback-btn" id="nextBtn">⏭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/globe.gl@2.45.0/dist/globe.gl.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    
+    <script>
+        // Configuration
+        const GEMINI_API_KEY = 'AIzaSyDNm67CxCXF4yV1UBG2WKeN6eUch4Ue1xE';
+        const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+        
+        // Available years with GeoJSON files
+        const availableYears = [
+            { year: -10000, file: 'world_bc10000.geojson', label: '10,000 BC' },
+            { year: -5000, file: 'world_bc5000.geojson', label: '5,000 BC' },
+            { year: -3000, file: 'world_bc3000.geojson', label: '3,000 BC' },
+            { year: -2000, file: 'world_bc2000.geojson', label: '2,000 BC' },
+            { year: -1500, file: 'world_bc1500.geojson', label: '1,500 BC' },
+            { year: -1000, file: 'world_bc1000.geojson', label: '1,000 BC' },
+            { year: -500, file: 'world_bc500.geojson', label: '500 BC' },
+            { year: -323, file: 'world_bc323.geojson', label: '323 BC' },
+            { year: -200, file: 'world_bc200.geojson', label: '200 BC' },
+            { year: -1, file: 'world_bc1.geojson', label: '1 BC' },
+            { year: 100, file: 'world_100.geojson', label: '100 AD' },
+            { year: 200, file: 'world_200.geojson', label: '200 AD' },
+            { year: 400, file: 'world_400.geojson', label: '400 AD' },
+            { year: 600, file: 'world_600.geojson', label: '600 AD' },
+            { year: 800, file: 'world_800.geojson', label: '800 AD' },
+            { year: 1000, file: 'world_1000.geojson', label: '1000 AD' },
+            { year: 1200, file: 'world_1200.geojson', label: '1200 AD' },
+            { year: 1279, file: 'world_1279.geojson', label: '1279 AD' },
+            { year: 1400, file: 'world_1400.geojson', label: '1400 AD' },
+            { year: 1492, file: 'world_1492.geojson', label: '1492 AD' },
+            { year: 1600, file: 'world_1600.geojson', label: '1600 AD' },
+            { year: 1700, file: 'world_1700.geojson', label: '1700 AD' },
+            { year: 1783, file: 'world_1783.geojson', label: '1783 AD' },
+            { year: 1815, file: 'world_1815.geojson', label: '1815 AD' },
+            { year: 1880, file: 'world_1880.geojson', label: '1880 AD' },
+            { year: 1914, file: 'world_1914.geojson', label: '1914 AD' },
+            { year: 1938, file: 'world_1938.geojson', label: '1938 AD' },
+            { year: 1945, file: 'world_1945.geojson', label: '1945 AD' },
+            { year: 1960, file: 'world_1960.geojson', label: '1960 AD' },
+            { year: 1994, file: 'world_1994.geojson', label: '1994 AD' },
+            { year: 2010, file: 'world_2010.geojson', label: '2010 AD' }
+        ];
+        
+        // State
+        let globe = null;
+        let currentYearIndex = 15; // 1000 AD
+        let dataCache = {};
+        let tradeRoutesData = [];
+        let wondersData = [];
+        let warsData = [];
+        let religionsData = [];
+        let plaguesData = [];
+        let isPlaying = false;
+        let playInterval = null;
+        let localHistoryCache = new Map();
+        
+        // Layer visibility
+        let layers = {
+            borders: true,
+            trade: false,
+            tech: false,
+            pop: false,
+            climate: false,
+            wonders: false,
+            wars: false,
+            religions: false,
+            plagues: false
+        };
+        
+        // Color palette for territories
+        const colorPalette = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+            '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+            '#F8B500', '#00CED1', '#FF69B4', '#32CD32', '#FFD700'
+        ];
+        
+        // Initialize globe
+        async function init() {
+            globe = Globe()
+                .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+                .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+                .showAtmosphere(true)
+                .atmosphereColor('#3a7bd5')
+                .atmosphereAltitude(0.25)
+                .polygonsData([])
+                .polygonAltitude(0.01)
+                .polygonCapColor(d => d.color || '#444')
+                .polygonSideColor(() => 'rgba(100, 100, 100, 0.2)')
+                .polygonStrokeColor(() => '#fff')
+                .polygonLabel(d => `<div class="territory-tooltip">${d.properties?.NAME || d.properties?.SUBJECTO || 'Unknown'}</div>`)
+                .onPolygonClick(handleTerritoryClick)
+                .arcsData([])
+                .arcColor(d => d.color)
+                .arcAltitude(0.15)
+                .arcStroke(1.5)
+                .arcDashLength(0.5)
+                .arcDashGap(0.2)
+                .arcDashAnimateTime(2000)
+                .pointsData([])
+                .pointAltitude(0.05)
+                .pointColor(d => d.color)
+                .pointRadius(0.3)
+                .pointLabel(d => `<div class="territory-tooltip">${d.name}</div>`)
+                .labelsData([])
+                .labelText(d => d.name)
+                .labelSize(1.2)
+                .labelColor(() => 'rgba(255, 255, 255, 0.9)')
+                .labelResolution(2)
+                .labelAltitude(0.02)
+                (document.getElementById('globeContainer'));
+            
+            // Set initial view
+            globe.pointOfView({ lat: 30, lng: 0, altitude: 2.5 });
+            
+            // Load supplementary data
+            await Promise.all([
+                loadTradeRoutes(),
+                loadWonders(),
+                loadWars(),
+                loadReligions(),
+                loadPlagues()
+            ]);
+            
+            // Load initial year
+            await loadYear(currentYearIndex);
+            
+            // Setup controls
+            setupControls();
+            
+            // Hide loading
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+        
+        async function loadYear(index) {
+            if (index < 0 || index >= availableYears.length) return;
+            
+            currentYearIndex = index;
+            const yearData = availableYears[index];
+            
+            // Update UI
+            document.getElementById('yearDisplay').textContent = yearData.label;
+            document.getElementById('timelineSlider').value = (index / (availableYears.length - 1)) * 100;
+            
+            // Load GeoJSON if not cached
+            if (!dataCache[yearData.file]) {
+                try {
+                    const response = await fetch(`data/geojson/${yearData.file}`);
+                    dataCache[yearData.file] = await response.json();
+                } catch (err) {
+                    console.error('Error loading:', err);
+                    return;
+                }
+            }
+            
+            const data = dataCache[yearData.file];
+            renderBorders(data, yearData.year);
+            updateLayers(yearData.year);
+        }
+        
+        function renderBorders(geojson, year) {
+            if (!layers.borders) {
+                globe.polygonsData([]);
+                document.getElementById('regionCount').textContent = '0 territories';
+                return;
+            }
+            
+            // Assign colors to territories
+            const entities = [...new Set(geojson.features.map(f => f.properties.SUBJECTO || f.properties.NAME))];
+            
+            const polygons = geojson.features.map(f => ({
+                ...f,
+                color: colorPalette[entities.indexOf(f.properties.SUBJECTO || f.properties.NAME) % colorPalette.length] + '99'
+            }));
+            
+            globe.polygonsData(polygons);
+            document.getElementById('regionCount').textContent = `${geojson.features.length} territories`;
+            
+            // Update labels for major territories
+            updateLabels(geojson);
+        }
+        
+        function updateLabels(geojson) {
+            const labels = [];
+            const seen = new Set();
+            
+            geojson.features.forEach(f => {
+                const name = f.properties.SUBJECTO || f.properties.NAME;
+                if (!name || seen.has(name)) return;
+                
+                // Calculate centroid (rough)
+                let coords = f.geometry.coordinates;
+                if (f.geometry.type === 'MultiPolygon') {
+                    coords = coords[0];
+                }
+                if (coords && coords[0]) {
+                    const ring = coords[0];
+                    if (ring.length > 0) {
+                        const lats = ring.map(c => c[1]);
+                        const lngs = ring.map(c => c[0]);
+                        const lat = lats.reduce((a, b) => a + b) / lats.length;
+                        const lng = lngs.reduce((a, b) => a + b) / lngs.length;
+                        
+                        // Only label larger territories
+                        const area = (Math.max(...lats) - Math.min(...lats)) * (Math.max(...lngs) - Math.min(...lngs));
+                        if (area > 100) {
+                            labels.push({ name, lat, lng });
+                            seen.add(name);
+                        }
+                    }
+                }
+            });
+            
+            globe.labelsData(labels);
+        }
+        
+        async function loadTradeRoutes() {
+            try {
+                const response = await fetch('data/trade-routes.geojson');
+                const data = await response.json();
+                tradeRoutesData = data.features.map(f => ({
+                    ...f.properties,
+                    coords: f.geometry.coordinates
+                }));
+            } catch (e) {
+                console.log('Trade routes not loaded:', e);
+            }
+        }
+        
+        async function loadWonders() {
+            try {
+                const response = await fetch('data/wonders.json');
+                wondersData = await response.json();
+            } catch (e) {
+                console.log('Wonders not loaded:', e);
+            }
+        }
+        
+        async function loadWars() {
+            try {
+                const response = await fetch('data/wars.json');
+                warsData = await response.json();
+            } catch (e) {
+                console.log('Wars not loaded:', e);
+            }
+        }
+        
+        async function loadReligions() {
+            try {
+                const response = await fetch('data/religions.json');
+                religionsData = await response.json();
+            } catch (e) {
+                console.log('Religions not loaded:', e);
+            }
+        }
+        
+        async function loadPlagues() {
+            try {
+                const response = await fetch('data/plagues.json');
+                plaguesData = await response.json();
+            } catch (e) {
+                console.log('Plagues not loaded:', e);
+            }
+        }
+        
+        function updateLayers(year) {
+            // Trade routes
+            if (layers.trade) {
+                const activeRoutes = tradeRoutesData.filter(r => 
+                    year >= r.startYear && year <= r.endYear
+                );
+                
+                const arcs = [];
+                activeRoutes.forEach(route => {
+                    const coords = route.coords;
+                    for (let i = 0; i < coords.length - 1; i++) {
+                        arcs.push({
+                            startLat: coords[i][1],
+                            startLng: coords[i][0],
+                            endLat: coords[i + 1][1],
+                            endLng: coords[i + 1][0],
+                            color: route.type === 'silk' ? '#FFD700' : 
+                                   route.type === 'maritime' ? '#4ECDC4' : '#FF6B6B',
+                            name: route.name
+                        });
+                    }
+                });
+                
+                globe.arcsData(arcs);
+                document.getElementById('tradeLegend').classList.add('visible');
+            } else {
+                globe.arcsData([]);
+                document.getElementById('tradeLegend').classList.remove('visible');
+            }
+            
+            // Points (wonders, wars, religions, plagues)
+            const points = [];
+            
+            if (layers.wonders) {
+                wondersData.forEach(w => {
+                    if (year >= (w.builtYear || -10000) && year <= (w.destroyedYear || 3000)) {
+                        points.push({
+                            lat: w.lat,
+                            lng: w.lng,
+                            name: `🏛️ ${w.name}`,
+                            color: '#FFD700',
+                            type: 'wonder'
+                        });
+                    }
+                });
+            }
+            
+            if (layers.wars) {
+                warsData.forEach(w => {
+                    if (year >= w.startYear && year <= w.endYear) {
+                        if (w.battles) {
+                            w.battles.forEach(b => {
+                                if (b.lat && b.lng) {
+                                    points.push({
+                                        lat: b.lat,
+                                        lng: b.lng,
+                                        name: `⚔️ ${b.name} (${w.name})`,
+                                        color: '#FF4444',
+                                        type: 'battle'
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            
+            if (layers.religions) {
+                religionsData.forEach(r => {
+                    if (r.origin && year >= r.foundedYear) {
+                        points.push({
+                            lat: r.origin.lat,
+                            lng: r.origin.lng,
+                            name: `🕊️ ${r.name} origin`,
+                            color: r.color || '#9B59B6',
+                            type: 'religion'
+                        });
+                    }
+                });
+            }
+            
+            if (layers.plagues) {
+                plaguesData.forEach(p => {
+                    if (year >= p.startYear && year <= p.endYear) {
+                        if (p.origin) {
+                            points.push({
+                                lat: p.origin.lat,
+                                lng: p.origin.lng,
+                                name: `☠️ ${p.name}`,
+                                color: '#27AE60',
+                                type: 'plague'
+                            });
+                        }
+                    }
+                });
+            }
+            
+            globe.pointsData(points);
+        }
+        
+        function handleTerritoryClick(polygon, event, { lat, lng }) {
+            const name = polygon.properties?.SUBJECTO || polygon.properties?.NAME || 'Unknown';
+            queryLocalHistory(lat, lng, name);
+        }
+        
+        async function queryLocalHistory(lat, lng, placeName) {
+            const year = availableYears[currentYearIndex].year;
+            const yearBucket = Math.round(year / 50) * 50;
+            const cacheKey = `${lat.toFixed(1)},${lng.toFixed(1)},${yearBucket}`;
+            
+            // Show panel
+            const panel = document.getElementById('infoPanel');
+            panel.classList.add('visible');
+            document.getElementById('infoPanelTitle').textContent = placeName;
+            document.getElementById('infoPanelSubtitle').textContent = `${availableYears[currentYearIndex].label} • Researching...`;
+            document.getElementById('infoPanelContent').innerHTML = '<div style="text-align:center;padding:20px;"><div class="loading-spinner" style="width:30px;height:30px;margin:0 auto;"></div></div>';
+            
+            // Check cache
+            if (localHistoryCache.has(cacheKey)) {
+                displayLocalHistory(localHistoryCache.get(cacheKey));
+                return;
+            }
+            
+            try {
+                const result = await queryGemini(lat, lng, placeName, year);
+                const data = { placeName, result, year };
+                localHistoryCache.set(cacheKey, data);
+                displayLocalHistory(data);
+            } catch (err) {
+                document.getElementById('infoPanelContent').innerHTML = `<div style="color:#ff6b6b;">Error loading history: ${err.message}</div>`;
+            }
+        }
+        
+        async function queryGemini(lat, lng, placeName, year) {
+            const yearLabel = year < 0 ? `${Math.abs(year)} BCE` : `${year} CE`;
+            
+            const prompt = `You are a historical expert. Provide a concise overview of ${placeName} during ${yearLabel}.
+
+Include (if relevant):
+- Indigenous peoples or tribes
+- Settlements, colonies, or cities
+- Political control (empire, kingdom, tribe)
+- Notable events or conflicts
+- Economic activities
+- Any famous historical figures
+
+Keep response under 250 words. Use bullet points.`;
+
+            const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { temperature: 0.3, maxOutputTokens: 400 }
+                })
+            });
+            
+            if (!response.ok) throw new Error(`API error: ${response.status}`);
+            
+            const data = await response.json();
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No information available.';
+        }
+        
+        function displayLocalHistory(data) {
+            document.getElementById('infoPanelSubtitle').textContent = `${availableYears[currentYearIndex].label}`;
+            
+            let html = data.result
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^\* /gm, '• ')
+                .replace(/^- /gm, '• ')
+                .replace(/\n/g, '<br>');
+            
+            document.getElementById('infoPanelContent').innerHTML = html;
+        }
+        
+        function closeInfoPanel() {
+            document.getElementById('infoPanel').classList.remove('visible');
+        }
+        
+        function setupControls() {
+            // Timeline slider
+            document.getElementById('timelineSlider').addEventListener('input', (e) => {
+                const index = Math.round((e.target.value / 100) * (availableYears.length - 1));
+                loadYear(index);
+            });
+            
+            // Playback buttons
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                loadYear(Math.max(0, currentYearIndex - 1));
+            });
+            
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                loadYear(Math.min(availableYears.length - 1, currentYearIndex + 1));
+            });
+            
+            document.getElementById('playBtn').addEventListener('click', togglePlay);
+            
+            // Layer toggles
+            document.querySelectorAll('.layer-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const layer = btn.dataset.layer;
+                    layers[layer] = !layers[layer];
+                    btn.classList.toggle('active');
+                    
+                    if (layer === 'borders') {
+                        loadYear(currentYearIndex);
+                    } else {
+                        updateLayers(availableYears[currentYearIndex].year);
+                    }
+                });
+            });
+        }
+        
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                btn.textContent = '⏸️';
+                btn.classList.add('active');
+                playInterval = setInterval(() => {
+                    if (currentYearIndex >= availableYears.length - 1) {
+                        currentYearIndex = -1;
+                    }
+                    loadYear(currentYearIndex + 1);
+                }, 2000);
+            } else {
+                btn.textContent = '▶️';
+                btn.classList.remove('active');
+                clearInterval(playInterval);
+            }
+        }
+        
+        // Start
+        init();
+    </script>
+</body>
+</html>

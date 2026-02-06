@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Map - Explore Human History</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .territory-tooltip { background: rgba(0,0,0,0.8); border: none; border-radius: 4px; color: white; font-size: 14px; padding: 6px 12px; font-weight: 500; }
+        .territory-label { background: transparent !important; border: none !important; box-shadow: none !important; color: #333; font-size: 11px; font-weight: 600; text-shadow: 1px 1px 2px white, -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white; white-space: nowrap; text-align: center; }
+        .territory-label.major { font-size: 13px; font-weight: 700; }
+        #localHistoryPanel { position: fixed; top: 80px; right: 20px; width: 350px; max-height: 70vh; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: none; z-index: 1000; overflow: hidden; font-family: system-ui, -apple-system, sans-serif; }
+        .local-history-header { display: flex; align-items: center; padding: 12px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .local-history-icon { font-size: 20px; margin-right: 8px; }
+        .local-history-title { font-weight: 600; flex: 1; }
+        .local-history-close { background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 0 4px; opacity: 0.8; }
+        .local-history-close:hover { opacity: 1; }
+        .local-history-location { padding: 10px 16px; background: #f8f9fa; font-size: 13px; color: #666; border-bottom: 1px solid #eee; }
+        .local-history-content { padding: 16px; max-height: 50vh; overflow-y: auto; font-size: 14px; line-height: 1.6; }
+        .local-history-text { color: #333; }
+        .local-history-text strong { color: #1a1a2e; }
+        .local-history-loading { display: flex; flex-direction: column; align-items: center; padding: 30px; color: #666; }
+        .local-history-loading .spinner { width: 30px; height: 30px; border: 3px solid #eee; border-top-color: #667eea; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .local-history-error { color: #dc3545; text-align: center; padding: 20px; }
+        .local-history-disclaimer { padding: 10px 16px; background: #fff3cd; font-size: 11px; color: #856404; border-top: 1px solid #ffeeba; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        #map { 
+            width: 100%; 
+            height: calc(100vh - 120px); 
+        }
+        
+        .controls {
+            background: #1a1a2e;
+            padding: 20px;
+            color: white;
+        }
+        
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .year-display {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #eee;
+        }
+        
+        .year-display span { color: #ffd700; }
+        
+        #timeline {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #4a0080, #800080, #ff6b6b, #ffd93d);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        #timeline::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #ffd700;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        #playBtn { background: #ffd700; color: #1a1a2e; font-weight: bold; }
+        #playBtn:hover { background: #ffed4a; }
+        
+        .speed-btn { background: #333; color: white; }
+        .speed-btn:hover { background: #555; }
+        .speed-btn.active { background: #ffd700; color: #1a1a2e; }
+        
+        .toggle-btn { background: #444; color: white; }
+        .toggle-btn.active { background: #e74c3c; }
+        
+        .era-markers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            z-index: 2000;
+            display: none;
+        }
+        
+        /* Search Box */
+        .search-container {
+            position: absolute;
+            top: 10px;
+            left: 60px;
+            z-index: 1000;
+        }
+        
+        #searchBox {
+            padding: 12px 15px;
+            width: 280px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        #searchBox:focus { outline: 2px solid #ffd700; }
+        
+        .search-results {
+            background: white;
+            border-radius: 8px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: none;
+        }
+        
+        .search-results.active { display: block; }
+        
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .search-result-item:hover { background: #f5f5f5; }
+        .search-result-item strong { display: block; color: #1a1a2e; }
+        .search-result-item span { font-size: 0.85rem; color: #666; }
+        
+        /* Rabbit Hole Explorer Panel */
+        .rabbit-hole-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 400px;
+            max-height: calc(100vh - 200px);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .rabbit-hole-panel.active { display: flex; flex-direction: column; }
+        
+        .rabbit-hole-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .rabbit-hole-header h2 {
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+            padding-right: 30px;
+        }
+        
+        .rabbit-hole-header .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        
+        .rabbit-hole-header .close-btn:hover { background: rgba(255,255,255,0.3); }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            font-size: 0.85rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .breadcrumb {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb:hover { color: #764ba2; }
+        .breadcrumb-sep { color: #999; }
+        
+        /* Content */
+        .rabbit-hole-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .rabbit-hole-summary {
+            font-size: 1rem;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .rabbit-holes-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Rabbit Hole Cards */
+        .rabbit-hole-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid #667eea;
+        }
+        
+        .rabbit-hole-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .rabbit-hole-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .rabbit-hole-card .question {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .type-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .type-badge.engineering { background: #e67e22; }
+        .type-badge.math { background: #3498db; }
+        .type-badge.science { background: #2ecc71; }
+        .type-badge.history { background: #9b59b6; }
+        .type-badge.people { background: #e74c3c; }
+        .type-badge.society { background: #1abc9c; }
+        .type-badge.military { background: #c0392b; }
+        .type-badge.culture { background: #f39c12; }
+        .type-badge.trade { background: #27ae60; }
+        .type-badge.artifact { background: #8e44ad; }
+        .type-badge.geography { background: #16a085; }
+        
+        /* Links */
+        .panel-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .wiki-link {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #3366cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .wiki-link:hover { background: #2255bb; }
+        
+        /* Event markers */
+        .event-marker {
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .event-marker.battle { background: #e74c3c; }
+        .event-marker.treaty { background: #2ecc71; }
+        .event-marker.discovery { background: #3498db; }
+        .event-marker.founding { background: #9b59b6; }
+        
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 0.85rem;
+        }
+        
+        .legend h4 { margin: 0 0 8px 0; font-size: 0.9rem; }
+        .legend-item { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        /* Stats */
+        .stats {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 999;
+        }
+        
+        /* Panel Tabs */
+        .panel-tabs {
+            display: flex;
+            background: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .panel-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            background: transparent;
+            transition: all 0.2s;
+        }
+        
+        .panel-tab:hover { background: #e0e0e0; }
+        .panel-tab.active { 
+            background: white; 
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+        }
+        
+        /* Day in Life Styles */
+        .life-period {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .life-roles { display: flex; flex-direction: column; gap: 10px; }
+        
+        .life-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .life-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        .life-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .life-role-icon { font-size: 1.5rem; }
+        .life-role-title { flex: 1; font-weight: bold; }
+        .life-expand-icon { 
+            transition: transform 0.3s;
+            font-size: 0.8rem;
+        }
+        
+        .life-card.expanded .life-expand-icon { transform: rotate(180deg); }
+        
+        .life-card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 15px;
+        }
+        
+        .life-card.expanded .life-card-body {
+            max-height: 800px;
+            padding: 15px;
+        }
+        
+        .life-schedule { margin-bottom: 15px; }
+        
+        .life-time {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .life-time span {
+            font-weight: bold;
+            display: inline-block;
+            width: 100px;
+        }
+        
+        .life-stats {
+            background: #fff;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .life-stat {
+            margin: 8px 0;
+            font-size: 0.85rem;
+        }
+        
+        .stat-label {
+            font-weight: bold;
+            display: block;
+            color: #667eea;
+            margin-bottom: 3px;
+        }
+        
+        .stat-value { color: #555; }
+        
+        .no-data {
+            text-align: center;
+            color: #888;
+            padding: 30px;
+            font-style: italic;
+        }
+        
+        /* Trade Routes */
+        .trade-route {
+            animation: dash 30s linear infinite;
+        }
+        
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+        
+        .trade-legend {
+            position: absolute;
+            bottom: 140px;
+            left: 10px;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 0.8rem;
+            max-width: 200px;
+            display: none;
+        }
+        
+        .trade-legend.active { display: block; }
+        .trade-legend h4 { margin: 0 0 8px 0; font-size: 0.9rem; }
+        
+        .trade-route-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0;
+            font-size: 0.75rem;
+        }
+        
+        .trade-route-line {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        
+        /* Tech Panel */
+        .tech-panel {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            max-width: 250px;
+            display: none;
+        }
+        
+        .tech-panel.active { display: block; }
+        .tech-panel h4 { margin: 0 0 10px 0; }
+        .tech-hint { font-size: 0.8rem; color: #666; margin-bottom: 10px; }
+        
+        .tech-btn {
+            display: inline-block;
+            padding: 6px 10px;
+            margin: 3px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .tech-btn:hover { background: #e0e0e0; }
+        .tech-btn.active { background: #667eea; color: white; }
+        .tech-btn.unavailable { opacity: 0.4; cursor: not-allowed; }
+        
+        #techInfo {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            display: none;
+        }
+        
+        #techInfo.active { display: block; }
+        #techInfo h5 { margin: 0 0 8px 0; }
+        #techInfo p { margin: 5px 0; color: #555; }
+        
+        .tech-origin-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Population Display */
+        .pop-display {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .pop-display.active { display: block; }
+        .pop-display span { color: #ffd700; }
+        
+        .pop-legend {
+            position: absolute;
+            bottom: 140px;
+            right: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 998;
+            font-size: 0.75rem;
+            display: none;
+        }
+        
+        .pop-legend.active { display: block; }
+        .pop-legend h4 { margin: 0 0 8px 0; font-size: 0.85rem; }
+        
+        .pop-scale {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .pop-scale-item {
+            width: 20px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        /* Climate Display */
+        .climate-display {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .climate-display.active { display: block; }
+        .climate-display.warm { background: rgba(243, 156, 18, 0.9); }
+        .climate-display.cold { background: rgba(52, 152, 219, 0.9); }
+        .climate-display.drought { background: rgba(192, 57, 43, 0.9); }
+        .climate-display.warming { background: rgba(231, 76, 60, 0.9); }
+        
+        /* Hint */
+        .hint {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            background: rgba(102, 126, 234, 0.95);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            max-width: 300px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .hint strong { display: block; margin-bottom: 5px; }
+        .hint-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="search-container">
+        <input type="text" id="searchBox" placeholder="🔍 Search empires, nations...">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <div class="hint" id="hint">
+        <button class="hint-close" onclick="document.getElementById('hint').style.display='none'">×</button>
+        <strong>🐇 Explore Rabbit Holes!</strong>
+        Click any region or event marker to start exploring connected topics.
+    </div>
+    
+    <!-- Explorer Panel -->
+    <div class="rabbit-hole-panel" id="rabbitHolePanel">
+        <div class="rabbit-hole-header">
+            <h2 id="rabbitHoleTitle">Topic</h2>
+            <button class="close-btn" onclick="closeRabbitHole()">×</button>
+        </div>
+        <div class="panel-tabs">
+            <button class="panel-tab active" data-tab="explore" onclick="switchTab('explore')">🐇 Explore</button>
+            <button class="panel-tab" data-tab="life" onclick="switchTab('life')">👤 Daily Life</button>
+        </div>
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+        <div class="rabbit-hole-content" id="rabbitHoleContent"></div>
+        <div class="rabbit-hole-content" id="dayInLifeContent" style="display:none;"></div>
+    </div>
+    
+    <div class="climate-display" id="climateDisplay"></div>
+    
+    <div class="pop-display" id="popDisplay">
+        🌍 World Population: <span id="popTotal">0</span>
+    </div>
+    
+    <div class="pop-legend" id="popLegend">
+        <h4>👥 Population Density</h4>
+        <div class="pop-scale">
+            <div class="pop-scale-item" style="background: #fff7bc"></div>
+            <div class="pop-scale-item" style="background: #fee391"></div>
+            <div class="pop-scale-item" style="background: #fec44f"></div>
+            <div class="pop-scale-item" style="background: #fe9929"></div>
+            <div class="pop-scale-item" style="background: #d95f0e"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.7rem;">
+            <span>Low</span><span>High</span>
+        </div>
+    </div>
+    
+    <div class="tech-panel" id="techPanel">
+        <h4>💡 Technology Spread</h4>
+        <p class="tech-hint">Select a technology to see how it spread:</p>
+        <div id="techList"></div>
+        <div id="techInfo"></div>
+    </div>
+    
+    <div class="trade-legend" id="tradeLegend">
+        <h4>🛤️ Trade Routes</h4>
+        <div id="tradeRoutesList"></div>
+    </div>
+    
+    <div class="legend" id="legend">
+        <h4>⚔️ Events</h4>
+        <div class="legend-item"><div class="legend-dot" style="background: #e74c3c;"></div><span>Battles</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #2ecc71;"></div><span>Treaties</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #3498db;"></div><span>Discoveries</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #9b59b6;"></div><span>Foundings</span></div>
+    </div>
+    
+    <div class="stats" id="stats">
+        <div>Regions: <span id="regionCount">0</span></div>
+        <div>Events: <span id="eventCount">0</span></div>
+    </div>
+    
+    <div class="controls">
+        <div class="timeline-container">
+            <div class="year-display"><span id="yearText">1000 AD</span></div>
+            <input type="range" id="timeline" min="0" max="100" value="50">
+            <div class="era-markers">
+                <span>10,000 BC</span>
+                <span>5,000 BC</span>
+                <span>1 AD</span>
+                <span>1000 AD</span>
+                <span>2010</span>
+            </div>
+            <div class="controls-row">
+                <button id="playBtn">▶ Play</button>
+                <button class="speed-btn" data-speed="2000">Slow</button>
+                <button class="speed-btn active" data-speed="1000">Normal</button>
+                <button class="speed-btn" data-speed="400">Fast</button>
+                <button class="toggle-btn active" id="eventsToggle">⚔️ Events</button>
+                <button class="toggle-btn" id="tradeToggle">🛤️ Trade</button>
+                <button class="toggle-btn" id="techToggle">💡 Tech</button>
+                <button class="toggle-btn" id="popToggle">👥 Pop</button>
+                <button class="toggle-btn" id="climateToggle">🌡️ Climate</button>
+                <button class="toggle-btn" id="wondersToggle">🏛️ Wonders</button>
+                <button class="toggle-btn" id="warsToggle">⚔️ Wars</button>
+                <button class="toggle-btn" id="religionsToggle">🕊️ Religions</button>
+                <button class="toggle-btn" id="plaguesToggle">☠️ Plagues</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loading" id="loading">Loading...</div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/d3@7"></script>
+    <script src="js/rabbit-holes.js"></script>
+    <script src="js/day-in-life.js"></script>
+    <script src="js/trade-routes.js"></script>
+    <script src="js/tech-spread.js"></script>
+    <script src="js/population.js"></script>
+    <script src="js/climate.js"></script>
+    <script src="js/rulers.js"></script>
+    <script src="js/wonders.js"></script>
+    <script src="js/wars.js"></script>
+    <script src="js/religions.js"></script>
+    <script src="js/local-history.js"></script>
+    <script src="js/plagues.js"></script>
+    <script>
+        // Years
+        const availableYears = [
+            { year: -10000, file: 'world_bc10000.geojson', label: '10,000 BC' },
+            { year: -5000, file: 'world_bc5000.geojson', label: '5,000 BC' },
+            { year: -3000, file: 'world_bc3000.geojson', label: '3,000 BC' },
+            { year: -2000, file: 'world_bc2000.geojson', label: '2,000 BC' },
+            { year: -1500, file: 'world_bc1500.geojson', label: '1,500 BC' },
+            { year: -1000, file: 'world_bc1000.geojson', label: '1,000 BC' },
+            { year: -500, file: 'world_bc500.geojson', label: '500 BC' },
+            { year: -323, file: 'world_bc323.geojson', label: '323 BC' },
+            { year: -200, file: 'world_bc200.geojson', label: '200 BC' },
+            { year: -1, file: 'world_bc1.geojson', label: '1 BC' },
+            { year: 100, file: 'world_100.geojson', label: '100 AD' },
+            { year: 200, file: 'world_200.geojson', label: '200 AD' },
+            { year: 400, file: 'world_400.geojson', label: '400 AD' },
+            { year: 600, file: 'world_600.geojson', label: '600 AD' },
+            { year: 800, file: 'world_800.geojson', label: '800 AD' },
+            { year: 1000, file: 'world_1000.geojson', label: '1000 AD' },
+            { year: 1200, file: 'world_1200.geojson', label: '1200 AD' },
+            { year: 1279, file: 'world_1279.geojson', label: '1279 AD' },
+            { year: 1400, file: 'world_1400.geojson', label: '1400 AD' },
+            { year: 1492, file: 'world_1492.geojson', label: '1492 AD' },
+            { year: 1600, file: 'world_1600.geojson', label: '1600 AD' },
+            { year: 1700, file: 'world_1700.geojson', label: '1700 AD' },
+            { year: 1783, file: 'world_1783.geojson', label: '1783 AD' },
+            { year: 1815, file: 'world_1815.geojson', label: '1815 AD' },
+            { year: 1880, file: 'world_1880.geojson', label: '1880 AD' },
+            { year: 1914, file: 'world_1914.geojson', label: '1914 AD' },
+            { year: 1938, file: 'world_1938.geojson', label: '1938 AD' },
+            { year: 1945, file: 'world_1945.geojson', label: '1945 AD' },
+            { year: 1960, file: 'world_1960.geojson', label: '1960 AD' },
+            { year: 1994, file: 'world_1994.geojson', label: '1994 AD' },
+            { year: 2010, file: 'world_2010.geojson', label: '2010 AD' },
+        ];
+        
+        // Events with rabbit hole connections
+        const historicalEvents = [
+            { name: "Pyramids of Giza", year: -2560, lat: 29.9792, lng: 31.1342, type: "founding", desc: "Ancient Egyptian tomb complexes", hasRabbitHole: true },
+            { name: "Battle of Megiddo", year: -1456, lat: 32.585, lng: 35.184, type: "battle", desc: "Pharaoh Thutmose III defeats Canaanite coalition" },
+            { name: "Battle of Kadesh", year: -1274, lat: 34.555, lng: 36.498, type: "battle", desc: "Largest chariot battle in history" },
+            { name: "Fall of Troy", year: -1184, lat: 39.957, lng: 26.239, type: "battle", desc: "End of the Trojan War" },
+            { name: "Founding of Rome", year: -753, lat: 41.902, lng: 12.496, type: "founding", desc: "Traditional founding date" },
+            { name: "Battle of Marathon", year: -490, lat: 38.155, lng: 23.974, type: "battle", desc: "Greeks defeat Persian invasion" },
+            { name: "Battle of Thermopylae", year: -480, lat: 38.796, lng: 22.537, type: "battle", desc: "300 Spartans' last stand", hasRabbitHole: true },
+            { name: "Alexander conquers Persia", year: -331, lat: 36.357, lng: 43.159, type: "battle", desc: "Battle of Gaugamela" },
+            { name: "Fall of Carthage", year: -146, lat: 36.853, lng: 10.323, type: "battle", desc: "Rome destroys Carthage" },
+            { name: "Caesar crosses Rubicon", year: -49, lat: 44.143, lng: 12.405, type: "battle", desc: "Start of Roman civil war" },
+            { name: "Fall of Rome", year: 476, lat: 41.902, lng: 12.496, type: "battle", desc: "End of Western Roman Empire" },
+            { name: "Battle of Tours", year: 732, lat: 46.806, lng: 0.699, type: "battle", desc: "Franks halt Muslim expansion" },
+            { name: "Charlemagne crowned", year: 800, lat: 41.902, lng: 12.453, type: "founding", desc: "Holy Roman Empire begins" },
+            { name: "Norman Conquest", year: 1066, lat: 50.914, lng: 0.474, type: "battle", desc: "Battle of Hastings" },
+            { name: "First Crusade", year: 1099, lat: 31.778, lng: 35.235, type: "battle", desc: "Crusaders capture Jerusalem" },
+            { name: "Magna Carta", year: 1215, lat: 51.431, lng: -0.563, type: "treaty", desc: "Foundation of constitutional law" },
+            { name: "Mongol Empire peak", year: 1279, lat: 47.921, lng: 106.905, type: "founding", desc: "Largest contiguous empire", hasRabbitHole: true },
+            { name: "Fall of Constantinople", year: 1453, lat: 41.008, lng: 28.978, type: "battle", desc: "End of Byzantine Empire" },
+            { name: "Columbus reaches Americas", year: 1492, lat: 24.05, lng: -74.533, type: "discovery", desc: "European contact with New World", hasRabbitHole: true },
+            { name: "Protestant Reformation", year: 1517, lat: 51.867, lng: 12.638, type: "founding", desc: "Luther's 95 Theses" },
+            { name: "Treaty of Westphalia", year: 1648, lat: 51.961, lng: 7.628, type: "treaty", desc: "End of Thirty Years' War" },
+            { name: "American Revolution", year: 1776, lat: 39.949, lng: -75.15, type: "founding", desc: "Declaration of Independence" },
+            { name: "French Revolution", year: 1789, lat: 48.853, lng: 2.369, type: "founding", desc: "Storming of the Bastille" },
+            { name: "Battle of Waterloo", year: 1815, lat: 50.68, lng: 4.412, type: "battle", desc: "Napoleon's final defeat" },
+            { name: "World War I begins", year: 1914, lat: 43.857, lng: 18.413, type: "battle", desc: "Assassination starts the war" },
+            { name: "Treaty of Versailles", year: 1919, lat: 48.805, lng: 2.12, type: "treaty", desc: "End of World War I" },
+            { name: "World War II begins", year: 1939, lat: 52.23, lng: 21.012, type: "battle", desc: "Germany invades Poland" },
+            { name: "D-Day", year: 1944, lat: 49.37, lng: -0.88, type: "battle", desc: "Allied invasion of Normandy" },
+            { name: "Berlin Wall falls", year: 1989, lat: 52.516, lng: 13.378, type: "founding", desc: "End of Cold War division" },
+        ];
+        
+        // State
+        let map, currentLayer, labelsLayer, currentYearIndex = 15;
+        let isPlaying = false, playInterval, playSpeed = 1000;
+        const dataCache = {};
+        let eventsLayer, showEvents = true, showTrade = false, showTech = false, showPop = false, showClimate = false, allRegions = [];
+        let showWonders = false, showWars = false, showReligions = false, showPlagues = false;
+        let tradeRoutes, techSpread, populationMap, climateOverlay;
+        let wondersModule, warsModule, religionsModule, plaguesModule;
+        let selectedTech = null;
+        
+        // Rabbit Holes
+        const rabbitHoles = new RabbitHoles();
+        const dayInLife = new DayInLife();
+        let currentRegion = '';
+        let currentTab = 'explore';
+        
+        const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+        
+        function initMap() {
+            map = L.map('map', {
+                center: [30, 0],
+                zoom: 2,
+                minZoom: 1,
+                maxZoom: 18,
+                worldCopyJump: true
+            });
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap, © CARTO',
+                maxZoom: 19
+            }).addTo(map);
+            
+            eventsLayer = L.layerGroup().addTo(map);
+            
+            // Initialize trade routes, tech spread, population
+            tradeRoutes = new TradeRoutes(map);
+            techSpread = new TechSpread(map);
+            techSpread.addTo(map);
+            populationMap = new PopulationMap(map);
+            populationMap.addTo(map);
+            climateOverlay = new ClimateOverlay(map);
+            climateOverlay.addTo(map);
+            
+            // New modules
+            wondersModule = new WondersModule(map);
+            wondersModule.addTo(map);
+            warsModule = new WarsModule(map);
+            warsModule.addTo(map);
+            religionsModule = new ReligionsModule(map);
+            religionsModule.addTo(map);
+            plaguesModule = new PlaguesModule(map);
+            plaguesModule.addTo(map);
+            
+            // Local history (semantic zoom)
+            LocalHistory.init(map);
+            
+            loadYear(currentYearIndex);
+        }
+        
+        async function loadYear(index) {
+            if (index < 0 || index >= availableYears.length) return;
+            
+            const yearData = availableYears[index];
+            currentYearIndex = index;
+            
+            document.getElementById('yearText').textContent = yearData.label;
+            LocalHistory.setYear(yearData.year);
+            document.getElementById('timeline').value = (index / (availableYears.length - 1)) * 100;
+            
+            if (dataCache[yearData.file]) {
+                renderLayer(dataCache[yearData.file], yearData.year);
+                return;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            try {
+                const response = await fetch(`data/geojson/${yearData.file}`);
+                const data = await response.json();
+                dataCache[yearData.file] = data;
+                renderLayer(data, yearData.year);
+            } catch (err) {
+                console.error('Error:', err);
+            }
+            
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        function renderLayer(data, currentYear) {
+            if (currentLayer) map.removeLayer(currentLayer);
+            if (labelsLayer) map.removeLayer(labelsLayer);
+            
+            const entities = [...new Set(data.features.map(f => f.properties.SUBJECTO || f.properties.NAME))];
+            
+            allRegions = data.features.map(f => ({
+                name: f.properties.NAME,
+                subject: f.properties.SUBJECTO,
+                partOf: f.properties.PARTOF,
+                bounds: L.geoJSON(f).getBounds()
+            }));
+            
+            document.getElementById('regionCount').textContent = data.features.length;
+            
+            currentLayer = L.geoJSON(data, {
+                style: feature => {
+                    const name = feature.properties.SUBJECTO || feature.properties.NAME;
+                    return {
+                        fillColor: colorScale(entities.indexOf(name) % 10),
+                        fillOpacity: 0.6,
+                        color: '#fff',
+                        weight: 1,
+                        opacity: 0.8
+                    };
+                },
+                onEachFeature: (feature, layer) => {
+                    const regionName = feature.properties.SUBJECTO || feature.properties.NAME;
+                    layer.on('click', () => {
+                        openRabbitHole(regionName);
+                        // Show ruler info for this region
+                        if (window.rulersModule) {
+                            rulersModule.showRuler(regionName, availableYears[currentYearIndex].year);
+                        }
+                    });
+                    layer.bindTooltip(regionName || 'Unknown', { sticky: true, className: 'territory-tooltip' });
+                    layer.on('mouseover', function() { this.setStyle({ fillOpacity: 0.9, weight: 2 }); });
+                    layer.on('mouseout', function() { this.setStyle({ fillOpacity: 0.6, weight: 1 }); });
+                }
+            }).addTo(map);
+            // Create territory labels for major regions
+            labelsLayer = L.layerGroup();
+            const labeledRegions = new Set();
+            const minArea = 50; // Minimum area to show label
+            
+            data.features.forEach(feature => {
+                const name = feature.properties.SUBJECTO || feature.properties.NAME;
+                if (!name || labeledRegions.has(name)) return;
+                
+                // Calculate center and rough area
+                const bounds = L.geoJSON(feature).getBounds();
+                const center = bounds.getCenter();
+                const area = (bounds.getNorth() - bounds.getSouth()) * (bounds.getEast() - bounds.getWest());
+                
+                if (area < minArea) return;
+                
+                labeledRegions.add(name);
+                const isMajor = area > 200;
+                
+                const label = L.marker(center, {
+                    icon: L.divIcon({
+                        className: 'territory-label' + (isMajor ? ' major' : ''),
+                        html: name,
+                        iconSize: [150, 20],
+                        iconAnchor: [75, 10]
+                    }),
+                    interactive: false
+                });
+                labelsLayer.addLayer(label);
+            });
+            labelsLayer.addTo(map);
+
+            updateEvents(currentYear);
+            updateTradeRoutes(currentYear);
+            if (showTech) updateTechPanel(currentYear);
+            if (showPop) updatePopulation(currentYear);
+            if (showClimate) updateClimate(currentYear);
+            if (showWonders) wondersModule.draw(currentYear);
+            if (showWars) warsModule.draw(currentYear);
+            if (showReligions) religionsModule.draw(currentYear);
+            if (showPlagues) plaguesModule.draw(currentYear);
+        }
+        
+        function updateClimate(currentYear) {
+            climateOverlay.draw(currentYear);
+            const summary = climateOverlay.getSummary(currentYear);
+            const display = document.getElementById('climateDisplay');
+            
+            if (summary.events.length > 0) {
+                display.className = 'climate-display active ' + summary.status;
+                display.textContent = `${summary.label}: ${summary.name}`;
+            } else {
+                display.className = 'climate-display active';
+                display.textContent = '🌍 Climate: Stable';
+            }
+        }
+        
+        function updatePopulation(currentYear) {
+            const info = populationMap.draw(currentYear);
+            if (info) {
+                const summary = populationMap.getSummary(currentYear);
+                document.getElementById('popTotal').textContent = summary.formatted;
+            }
+        }
+        
+        function updateTradeRoutes(currentYear) {
+            if (!showTrade) {
+                document.getElementById('tradeLegend').classList.remove('active');
+                tradeRoutes.toggle(false);
+                return;
+            }
+            
+            tradeRoutes.toggle(true);
+            const count = tradeRoutes.drawRoutes(currentYear);
+            tradeRoutes.startAnimation();
+            
+            // Update legend with enhanced info
+            const summary = tradeRoutes.getRouteSummary(currentYear);
+            const legend = document.getElementById('tradeLegend');
+            const list = document.getElementById('tradeRoutesList');
+            
+            if (summary.total > 0) {
+                legend.classList.add('active');
+                
+                // Show stats header
+                const statsHtml = `
+                    <div class="trade-stats" style="font-size: 11px; color: #888; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid #333;">
+                        🛤️ ${summary.landCount} land · ⛵ ${summary.maritimeCount} sea · 📈 ${summary.peakCount} at peak
+                    </div>
+                `;
+                
+                // Show route list with peak indicators
+                const routesHtml = summary.routes.map(r => `
+                    <div class="trade-route-item" style="display: flex; align-items: center; margin: 4px 0;">
+                        <div class="trade-route-line" style="width: 20px; height: ${r.isPeak ? '4px' : '2px'}; background: ${r.color}; margin-right: 8px; ${r.type === 'maritime' ? 'border-style: dashed;' : ''}"></div>
+                        <span style="font-size: 12px; ${r.isPeak ? 'font-weight: bold;' : 'color: #aaa;'}">${r.name}${r.isPeak ? ' 📈' : ''}</span>
+                    </div>
+                `).join('');
+                
+                list.innerHTML = statsHtml + routesHtml;
+            } else {
+                legend.classList.remove('active');
+            }
+        }
+        
+        function updateEvents(currentYear) {
+            eventsLayer.clearLayers();
+            if (!showEvents) { document.getElementById('eventCount').textContent = '0'; return; }
+            
+            const currentIdx = availableYears.findIndex(y => y.year === currentYear);
+            const nextYear = currentIdx < availableYears.length - 1 ? availableYears[currentIdx + 1].year : currentYear + 100;
+            
+            const visibleEvents = historicalEvents.filter(e => e.year >= currentYear && e.year < nextYear);
+            document.getElementById('eventCount').textContent = visibleEvents.length;
+            
+            visibleEvents.forEach(event => {
+                const icon = L.divIcon({ className: `event-marker ${event.type}`, iconSize: [14, 14] });
+                const marker = L.marker([event.lat, event.lng], { icon });
+                
+                marker.on('click', () => openRabbitHole(event.name));
+                marker.bindTooltip(event.name, { direction: 'top' });
+                
+                eventsLayer.addLayer(marker);
+            });
+        }
+        
+        // Rabbit Hole Functions
+        async function openRabbitHole(topic) {
+            document.getElementById('hint').style.display = 'none';
+            document.getElementById('rabbitHolePanel').classList.add('active');
+            document.getElementById('rabbitHoleTitle').textContent = topic;
+            document.getElementById('rabbitHoleContent').innerHTML = '<p>Loading...</p>';
+            
+            currentRegion = topic;
+            
+            const data = await rabbitHoles.explore(topic);
+            renderRabbitHole(topic, data);
+            updateBreadcrumbs();
+            
+            // Also load Day in Life
+            loadDayInLife(topic);
+        }
+        
+        function loadDayInLife(region) {
+            const year = availableYears[currentYearIndex].year;
+            const lifeData = dayInLife.getLife(region, year);
+            const html = dayInLife.renderLife(lifeData);
+            document.getElementById('dayInLifeContent').innerHTML = html;
+        }
+        
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            document.getElementById('rabbitHoleContent').style.display = tab === 'explore' ? 'block' : 'none';
+            document.getElementById('dayInLifeContent').style.display = tab === 'life' ? 'block' : 'none';
+            document.getElementById('breadcrumbs').style.display = tab === 'explore' ? 'flex' : 'none';
+        }
+        
+        function renderRabbitHole(topic, data) {
+            const content = document.getElementById('rabbitHoleContent');
+            
+            let html = `<div class="rabbit-hole-summary">${data.summary}</div>`;
+            
+            if (data.connections && data.connections.length > 0) {
+                html += `<div class="rabbit-holes-title">🐇 Go Deeper</div>`;
+                
+                data.connections.forEach(conn => {
+                    html += `
+                        <div class="rabbit-hole-card" onclick="openRabbitHole('${conn.topic.replace(/'/g, "\\'")}')">
+                            <h4>
+                                ${conn.topic}
+                                <span class="type-badge ${conn.type}">${conn.type}</span>
+                            </h4>
+                            <div class="question">${conn.question}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Wikipedia link
+            const wikiName = topic.replace(/ /g, '_');
+            html += `
+                <div class="panel-links">
+                    <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(wikiName)}" 
+                       target="_blank" class="wiki-link">
+                        📖 Wikipedia
+                    </a>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+        }
+        
+        function updateBreadcrumbs() {
+            const history = rabbitHoles.getHistory();
+            const container = document.getElementById('breadcrumbs');
+            
+            if (history.length <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = history.map((topic, i) => {
+                if (i === history.length - 1) {
+                    return `<span>${topic}</span>`;
+                }
+                return `<span class="breadcrumb" onclick="goToTopic(${i})">${topic}</span><span class="breadcrumb-sep">→</span>`;
+            }).join('');
+        }
+        
+        function goToTopic(index) {
+            const history = rabbitHoles.getHistory();
+            while (history.length > index + 1) {
+                rabbitHoles.history.pop();
+            }
+            openRabbitHole(history[index]);
+        }
+        
+        function closeRabbitHole() {
+            document.getElementById('rabbitHolePanel').classList.remove('active');
+            rabbitHoles.clearHistory();
+        }
+        
+        // Search
+        const searchBox = document.getElementById('searchBox');
+        const searchResults = document.getElementById('searchResults');
+        
+        searchBox.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            if (query.length < 2) { searchResults.classList.remove('active'); return; }
+            
+            const matches = allRegions.filter(r => 
+                r.name?.toLowerCase().includes(query) || r.subject?.toLowerCase().includes(query)
+            ).slice(0, 10);
+            
+            if (matches.length === 0) { searchResults.classList.remove('active'); return; }
+            
+            searchResults.innerHTML = matches.map(r => `
+                <div class="search-result-item" data-name="${r.name}" data-bounds='${JSON.stringify(r.bounds)}'>
+                    <strong>${r.name}</strong>
+                    <span>${r.subject && r.subject !== r.name ? `Part of ${r.subject}` : ''}</span>
+                </div>
+            `).join('');
+            searchResults.classList.add('active');
+        });
+        
+        searchResults.addEventListener('click', function(e) {
+            const item = e.target.closest('.search-result-item');
+            if (item) {
+                const bounds = JSON.parse(item.dataset.bounds);
+                map.fitBounds([[bounds._southWest.lat, bounds._southWest.lng], [bounds._northEast.lat, bounds._northEast.lng]]);
+                searchResults.classList.remove('active');
+                searchBox.value = '';
+                openRabbitHole(item.dataset.name);
+            }
+        });
+        
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.search-container')) searchResults.classList.remove('active');
+        });
+        
+        // Controls
+        document.getElementById('timeline').addEventListener('input', function() {
+            const index = Math.round((this.value / 100) * (availableYears.length - 1));
+            if (index !== currentYearIndex) loadYear(index);
+        });
+        
+        document.getElementById('playBtn').addEventListener('click', function() {
+            isPlaying = !isPlaying;
+            this.textContent = isPlaying ? '⏸ Pause' : '▶ Play';
+            if (isPlaying) {
+                playInterval = setInterval(() => {
+                    let next = currentYearIndex + 1;
+                    if (next >= availableYears.length) next = 0;
+                    loadYear(next);
+                }, playSpeed);
+            } else {
+                clearInterval(playInterval);
+            }
+        });
+        
+        document.querySelectorAll('.speed-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                playSpeed = parseInt(this.dataset.speed);
+                if (isPlaying) {
+                    clearInterval(playInterval);
+                    playInterval = setInterval(() => {
+                        let next = currentYearIndex + 1;
+                        if (next >= availableYears.length) next = 0;
+                        loadYear(next);
+                    }, playSpeed);
+                }
+            });
+        });
+        
+        document.getElementById('eventsToggle').addEventListener('click', function() {
+            showEvents = !showEvents;
+            this.classList.toggle('active', showEvents);
+            updateEvents(availableYears[currentYearIndex].year);
+        });
+        
+        document.getElementById('tradeToggle').addEventListener('click', function() {
+            showTrade = !showTrade;
+            this.classList.toggle('active', showTrade);
+            updateTradeRoutes(availableYears[currentYearIndex].year);
+        });
+        
+        document.getElementById('techToggle').addEventListener('click', function() {
+            showTech = !showTech;
+            this.classList.toggle('active', showTech);
+            document.getElementById('techPanel').classList.toggle('active', showTech);
+            
+            if (showTech) {
+                updateTechPanel(availableYears[currentYearIndex].year);
+            } else {
+                techSpread.clear();
+                selectedTech = null;
+            }
+        });
+        
+        function updateTechPanel(year) {
+            const allTech = techSpread.getAllTech();
+            const list = document.getElementById('techList');
+            
+            list.innerHTML = allTech.map(t => {
+                const available = year >= t.originYear;
+                return `
+                    <button class="tech-btn ${!available ? 'unavailable' : ''} ${selectedTech === t.id ? 'active' : ''}"
+                            data-tech="${t.id}" 
+                            ${!available ? 'disabled' : ''}
+                            onclick="selectTech('${t.id}')">
+                        ${t.icon} ${t.name}
+                    </button>
+                `;
+            }).join('');
+            
+            // Update current tech visualization if one is selected
+            if (selectedTech) {
+                const info = techSpread.showTech(selectedTech, year);
+                updateTechInfo(info);
+            }
+        }
+        
+        function selectTech(techId) {
+            selectedTech = techId;
+            const year = availableYears[currentYearIndex].year;
+            const info = techSpread.showTech(techId, year);
+            updateTechInfo(info);
+            
+            // Update button states
+            document.querySelectorAll('.tech-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tech === techId);
+            });
+        }
+        
+        document.getElementById('climateToggle').addEventListener('click', function() {
+            showClimate = !showClimate;
+            this.classList.toggle('active', showClimate);
+            document.getElementById('climateDisplay').classList.toggle('active', showClimate);
+            
+            if (showClimate) {
+                updateClimate(availableYears[currentYearIndex].year);
+            } else {
+                climateOverlay.clear();
+                document.getElementById('climateDisplay').classList.remove('active');
+            }
+        });
+        
+        document.getElementById('popToggle').addEventListener('click', function() {
+            showPop = !showPop;
+            this.classList.toggle('active', showPop);
+            document.getElementById('popDisplay').classList.toggle('active', showPop);
+            document.getElementById('popLegend').classList.toggle('active', showPop);
+            
+            if (showPop) {
+                updatePopulation(availableYears[currentYearIndex].year);
+            } else {
+                populationMap.clear();
+            }
+        });
+        
+        // Wonders toggle
+        document.getElementById('wondersToggle').addEventListener('click', function() {
+            showWonders = !showWonders;
+            this.classList.toggle('active', showWonders);
+            wondersModule.toggle(showWonders);
+            if (showWonders) {
+                wondersModule.draw(availableYears[currentYearIndex].year);
+            }
+        });
+        
+        // Wars toggle
+        document.getElementById('warsToggle').addEventListener('click', function() {
+            showWars = !showWars;
+            this.classList.toggle('active', showWars);
+            warsModule.toggle(showWars);
+            if (showWars) {
+                warsModule.draw(availableYears[currentYearIndex].year);
+            }
+        });
+        
+        // Religions toggle
+        document.getElementById('religionsToggle').addEventListener('click', function() {
+            showReligions = !showReligions;
+            this.classList.toggle('active', showReligions);
+            religionsModule.toggle(showReligions);
+            if (showReligions) {
+                religionsModule.draw(availableYears[currentYearIndex].year);
+            }
+        });
+        
+        // Plagues toggle
+        document.getElementById('plaguesToggle').addEventListener('click', function() {
+            showPlagues = !showPlagues;
+            this.classList.toggle('active', showPlagues);
+            plaguesModule.toggle(showPlagues);
+            if (showPlagues) {
+                plaguesModule.draw(availableYears[currentYearIndex].year);
+            }
+        });
+        
+        function updateTechInfo(info) {
+            const infoDiv = document.getElementById('techInfo');
+            if (!info) {
+                infoDiv.classList.remove('active');
+                return;
+            }
+            
+            infoDiv.classList.add('active');
+            infoDiv.innerHTML = `
+                <h5 style="color: ${info.color}">${info.icon} ${info.name}</h5>
+                <p><strong>Origin:</strong> ${info.origin.place}<br>
+                   ${Math.abs(info.origin.year)} ${info.origin.year < 0 ? 'BC' : 'AD'}</p>
+                <p><strong>Spread:</strong> ${info.spreadCount} of ${info.totalSpread} regions</p>
+                <p style="font-style: italic; font-size: 0.8rem;">${info.impact}</p>
+            `;
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT') return;
+            if (e.key === 'ArrowLeft') loadYear(Math.max(0, currentYearIndex - 1));
+            else if (e.key === 'ArrowRight') loadYear(Math.min(availableYears.length - 1, currentYearIndex + 1));
+            else if (e.key === ' ') { document.getElementById('playBtn').click(); e.preventDefault(); }
+            else if (e.key === 'Escape') closeRabbitHole();
+        });
+        
+        initMap();
+    </script>
+</body>
+</html>
